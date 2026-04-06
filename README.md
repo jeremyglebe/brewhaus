@@ -12,10 +12,21 @@ In both the client and the server directories, execute this command:
 
 ### Required
 
-- ❌ Main page listing out breweries
-- ❌ Pagination or lazy loading of breweries
+- ✅ Main page listing out breweries
+- ✅ Pagination or lazy loading of breweries
+  - Implemented as a lazy-loaded Infinite Scroll
 - ❌ Simple search function of breweries
 - ❌ Details page where a user can find out more information about specific breweries
+
+### Extension
+
+- ✅ Mobile-app ready UI
+- 🔎 Save Favorite Breweries
+- 🔎 Settings Menu to Switch Between Pagination/Infinite Scroll
+- 🔎 Random Images for each Brewery
+  - as placeholders for if the hypothetical company's API supported photos of the business
+- 🔎 Lat/Lon Maps Display
+- 🔎 Capacitor Integration
 
 ## Stack
 

@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:tools": "vite --mode devtools",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",
@@ -16,6 +17,7 @@
   },
   "dependencies": {
     "@apollo/client": "^4.1.6",
+    "@heroicons/vue": "^2.2.0",
     "@tailwindcss/vite": "^4.2.2",
     "graphql": "^16.13.2",
     "tailwindcss": "^4.2.2",

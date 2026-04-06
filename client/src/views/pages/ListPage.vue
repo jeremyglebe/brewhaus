@@ -47,7 +47,7 @@
              When it enters the viewport, we try to load the next page. -->
         <div ref="sentinel" class="py-4">
           <div v-if="loadingMore" class="flex justify-center">
-            <span class="loading loading-spinner loading-md"></span>
+            <span class="loading loading-infinity loading-xl"></span>
           </div>
 
           <div v-else-if="!hasNextPage" class="text-center text-sm text-base-content/60">
