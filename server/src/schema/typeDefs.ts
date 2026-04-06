@@ -27,6 +27,6 @@ export const typeDefs = `#graphql
 
   type Query {
     breweries(page: Int = 1, perPage: Int = 12, search: String): BreweryListResult!
-    brewery(id: ID!): Brewery
+    brewery(id: ID!): Brewery!
   }
 `;
