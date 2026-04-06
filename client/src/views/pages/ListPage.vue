@@ -28,7 +28,9 @@
       <!-- Main result list. -->
       <div v-else class="space-y-4">
         <div v-for="brewery in breweries" :key="brewery.id" class="card bg-base-100 shadow-sm">
-          <div class="card-body">
+
+          <!-- Manually entered card. -->
+          <!-- <div class="card-body">
             <h2 class="card-title">{{ brewery.name }}</h2>
 
             <p class="text-base-content/70">
@@ -40,8 +42,14 @@
                 {{ brewery.breweryType || 'Unknown type' }}
               </div>
             </div>
-          </div>
+          </div> -->
+
+          <!-- Component-based card -->
+          <BreweryListItem :brewery="brewery" @select="onListItemSelected"></BreweryListItem>
+
         </div>
+
+        <DetailModal ref="modalRef" />
 
         <!-- Sentinel observed by IntersectionObserver.
              When it enters the viewport, we try to load the next page. -->
@@ -51,7 +59,7 @@
           </div>
 
           <div v-else-if="!hasNextPage" class="text-center text-sm text-base-content/60">
-            You’ve reached the end.
+            You've reached the end.
           </div>
         </div>
       </div>
@@ -60,15 +68,17 @@
 </template>
 
 <script setup lang="ts">
-import type { Brewery } from '@/types/brewery';
+import type { BreweryResultItem } from '@/types/brewery';
 import { onBeforeUnmount, onMounted, ref, useTemplateRef } from 'vue';
-import { fetchBreweriesPage } from '@/services/breweryService';
+import { fetchBreweriesPage } from '@/services/brewery';
+import BreweryListItem from '@/components/BreweryListItem.vue';
+import DetailModal from '../modals/DetailModal.vue';
 
 // Configuration
 const PER_PAGE = 12;
 
 // Reactive data state
-const breweries = ref<Brewery[]>([]);
+const breweries = ref<BreweryResultItem[]>([]);
 const page = ref(1);
 const hasNextPage = ref(true);
 
@@ -76,6 +86,9 @@ const hasNextPage = ref(true);
 const initialLoading = ref(true);
 const loadingMore = ref(false);
 const errorMessage = ref<string | null>(null);
+
+// Modal reference for opening/closing the brewery detail modal from the list page
+const modal = useTemplateRef('modalRef');
 
 // Sentinel element marking the end of the page, the observer triggers when it enters the viewport
 const sentinelElement = useTemplateRef('sentinel');
@@ -187,6 +200,10 @@ function setupObserver(): void {
   observer.observe(sentinelElement.value);
 }
 
+function onListItemSelected(breweryId: string): void {
+  modal.value?.open(breweryId);
+}
+
 // lifecyle hook that runs when the user enters the page
 // handles the initial loading and setup
 onMounted(async () => {
@@ -199,4 +216,5 @@ onMounted(async () => {
 onBeforeUnmount(() => {
   observer?.disconnect();
 });
+
 </script>
