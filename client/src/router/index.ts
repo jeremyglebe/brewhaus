@@ -3,6 +3,7 @@ import ListPage from '@/views/pages/ListPage.vue'
 import BreweryListView from '@/views/BreweryListView.vue'
 import SearchPage from '@/views/pages/SearchPage.vue'
 import SettingsPage from '@/views/pages/SettingsPage.vue'
+import DetailPage from '@/views/pages/DetailPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,6 +22,11 @@ const router = createRouter({
       path: '/settings',
       name: 'settings',
       component: SettingsPage,
+    },
+    {
+      path: '/brewery/:id',
+      name: 'brewery-detail',
+      component: DetailPage,
     },
     {
       path: '/poc',

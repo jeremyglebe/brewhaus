@@ -1,63 +1,33 @@
 <template>
-  <div v-if="loading" class="flex justify-center py-6">
-    <span class="loading loading-infinity loading-md"></span>
-  </div>
-
-  <div v-else-if="errorMessage" class="alert alert-error shadow-sm">
-    <span>{{ errorMessage }}</span>
-  </div>
-
-  <div v-else-if="brewery" class="space-y-4">
-    <div>
-      <h2 class="text-2xl font-bold">{{ brewery.name }}</h2>
-      <p class="text-base-content/70">
-        {{ brewery.city }}<span v-if="brewery.stateProvince">, {{ brewery.stateProvince }}</span>
-      </p>
-    </div>
-
-    <div class="space-y-2">
-      <div v-if="brewery.breweryType" class="badge badge-outline">
-        {{ brewery.breweryType }}
+  <main class="min-h-screen bg-base-200">
+    <section class="container mx-auto max-w-2xl p-4">
+      <div class="mb-4">
+        <RouterLink to="/" class="btn btn-ghost btn-sm">
+          ← Back
+        </RouterLink>
       </div>
 
-      <p v-if="brewery.address1">{{ brewery.address1 }}</p>
-      <p v-if="brewery.phone">{{ brewery.phone }}</p>
-
-      <a v-if="brewery.websiteUrl" :href="brewery.websiteUrl" target="_blank" rel="noreferrer"
-        class="link link-primary">
-        Visit website
-      </a>
-    </div>
-  </div>
+      <div class="card bg-base-100 shadow-sm">
+        <div class="card-body">
+          <BreweryDetails v-if="breweryId" :brewery-id="breweryId" />
+          <div v-else class="alert alert-error">
+            <span>Missing brewery id.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
-import { fetchBreweryById } from '@/services/brewery'
-import type { BreweryDetailResult } from '@/types/brewery'
+import { computed } from 'vue'
+import { RouterLink, useRoute } from 'vue-router'
+import BreweryDetails from '../../components/BreweryDetails.vue'
 
-const props = defineProps<{
-  breweryId: string
-}>()
+const route = useRoute()
 
-const brewery = ref<BreweryDetailResult | null>(null)
-const loading = ref(true)
-const errorMessage = ref<string | null>(null)
-
-async function loadBrewery(): Promise<void> {
-  loading.value = true
-  errorMessage.value = null
-
-  try {
-    brewery.value = await fetchBreweryById(props.breweryId)
-  } catch (error) {
-    errorMessage.value =
-      error instanceof Error ? error.message : 'Unknown error'
-  } finally {
-    loading.value = false
-  }
-}
-
-onMounted(loadBrewery)
-watch(() => props.breweryId, loadBrewery)
+const breweryId = computed(() => {
+  const id = route.params.id
+  return typeof id === 'string' ? id : null
+})
 </script>

@@ -9,10 +9,12 @@
       </form>
 
       <!-- Content -->
-      <BreweryDetailPage
-        v-if="breweryId"
-        :brewery-id="breweryId"
-      />
+      <BreweryDetails v-if="breweryId" :brewery-id="breweryId" />
+
+      <!-- Route to the full page -->
+      <RouterLink :to="`/brewery/${breweryId}`" class="btn btn-outline btn-sm">
+        Open full page
+      </RouterLink>
     </div>
 
     <!-- Backdrop click closes dialog -->
@@ -24,7 +26,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
-import BreweryDetailPage from '@/views/pages/DetailPage.vue'
+import BreweryDetails from '@/components/BreweryDetails.vue'
 
 const emit = defineEmits<{
   (e: 'close'): void
