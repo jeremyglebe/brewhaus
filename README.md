@@ -21,10 +21,13 @@ In both the client and the server directories, execute this command:
 
 ### Client
 
-- Vue 3
-- tailwind
-- Apollo Client
-  - GraphQL client
+- **Vue 3**
+  - for app flow and logic
+- **tailwind**
+  - for clean css styles out of the box
+  - ***daisyUI***: for common mobile components built using tailwind css
+- **Apollo Client**
+  - for connecting to graphql
 
 ### Server
 
