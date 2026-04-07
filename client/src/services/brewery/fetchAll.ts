@@ -4,11 +4,10 @@ import type {
   AllBreweriesQuery,
   AllBreweriesQueryVariables,
 } from '@brewhaus/shared/types/graphql/generated/operations';
-import type { gqlBreweryListResult } from '@brewhaus/shared/types/graphql';
 
 export default async function fetchAllBreweries(
   variables: AllBreweriesQueryVariables,
-): Promise<gqlBreweryListResult> {
+): Promise<AllBreweriesQuery['listBreweries']> {
   // Make the graphql query to fetch the breweries page data.
   // 'network-only' ensures that the app doesn't use cached data.
   const { data } = await apolloClient.query<AllBreweriesQuery, AllBreweriesQueryVariables>({

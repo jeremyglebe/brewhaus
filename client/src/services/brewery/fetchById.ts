@@ -4,11 +4,10 @@ import type {
   BreweryByIdQuery,
   BreweryByIdQueryVariables,
 } from '@brewhaus/shared/types/graphql/generated/operations';
-import type { gqlBrewery } from '@brewhaus/shared/types/graphql';
 
 export default async function fetchBreweryById(
   variables: BreweryByIdQueryVariables,
-): Promise<gqlBrewery> {
+): Promise<BreweryByIdQuery['brewery']> {
   // Make a graphql query to fetch the brewery details by id.
   // 'network-only' ensures that the app doesn't use cached data.
   const { data } = await apolloClient.query<BreweryByIdQuery, BreweryByIdQueryVariables>({
