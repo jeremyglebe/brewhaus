@@ -34,10 +34,14 @@ async function start(): Promise<void> {
     });
 
     // start the express server
-    const PORT = process.env.PORT || 4000;
-    app.listen(PORT, () => {
+    const PORT = Number(process.env.PORT || 4000);
+    const HOST = process.env.HOST || '0.0.0.0';
+
+    app.listen(PORT, HOST, () => {
         console.log(`Server is running on http://localhost:${PORT}`);
         console.log(`GraphQL endpoint available at http://localhost:${PORT}/graphql`);
+        console.log(`Android emulator endpoint: http://10.0.2.2:${PORT}/graphql`);
+        console.log(`Listening on ${HOST}:${PORT}`);
     });
 }
 
