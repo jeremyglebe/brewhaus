@@ -1,24 +1,15 @@
 import { QUERIES } from '@/graphql/queries';
 import { apolloClient } from '@/lib/apollo';
 import type {
-  gqlBreweryListFilters,
-  gqlBreweryListMetaResult,
-} from '@brewhaus/shared/types/graphql';
-
-type QueryParameters = {
-  page: number;
-  perPage: number;
-  filters?: gqlBreweryListFilters | null;
-};
-
-type QueryResult = {
-  listBreweriesMeta: gqlBreweryListMetaResult;
-};
+  AllBreweriesMetaQuery,
+  AllBreweriesMetaQueryVariables,
+} from '@brewhaus/shared/types/graphql/generated/operations';
+import type { gqlBreweryListMetaResult } from '@brewhaus/shared/types/graphql';
 
 export default async function fetchBreweriesMeta(
-  variables: QueryParameters,
+  variables: AllBreweriesMetaQueryVariables,
 ): Promise<gqlBreweryListMetaResult> {
-  const { data } = await apolloClient.query<QueryResult, QueryParameters>({
+  const { data } = await apolloClient.query<AllBreweriesMetaQuery, AllBreweriesMetaQueryVariables>({
     query: QUERIES.ALL_BREWERIES_META,
     variables,
     fetchPolicy: 'network-only',

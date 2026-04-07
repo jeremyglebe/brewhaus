@@ -1,0 +1,16 @@
+schema: ./schema/schema.graphql
+documents:
+  - ../client/src/graphql/**/*.ts
+generates:
+  ./types/graphql/generated/schema.ts:
+    plugins:
+      - typescript
+      - typescript-resolvers
+    config:
+      useTypeImports: true
+  ./types/graphql/generated/operations.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+    config:
+      useTypeImports: true

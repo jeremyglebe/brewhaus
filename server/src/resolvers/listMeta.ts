@@ -1,13 +1,14 @@
 import {
-    gqlBreweryListFilters,
+    QueryListBreweriesMetaArgs,
     gqlBreweryListMetaResult,
 } from '@brewhaus/shared/types/graphql';
+import type { BreweryType } from '@brewhaus/shared/types/common';
 import API_CONSTANTS from '../services/api/constants';
 import { listBreweriesMeta } from '../services/api';
 
 export default async function gqlListBreweriesMeta(
     _parent: unknown,
-    args: { page?: number; perPage?: number; filters?: gqlBreweryListFilters },
+    args: QueryListBreweriesMetaArgs,
 ): Promise<gqlBreweryListMetaResult> {
     const { page, perPage, filters } = args;
 
@@ -21,7 +22,7 @@ export default async function gqlListBreweriesMeta(
         by_country: filters?.byCountry ?? undefined,
         by_state: filters?.byState ?? undefined,
         by_postal: filters?.byPostal ?? undefined,
-        by_type: filters?.byType ?? undefined,
+        by_type: (filters?.byType as BreweryType | null | undefined) ?? undefined,
     });
 
     const total = Number(apiResponse.total);

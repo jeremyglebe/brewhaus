@@ -1,11 +1,14 @@
-import { gqlBreweryListResult } from '@brewhaus/shared/types/graphql';
+import {
+    QuerySearchBreweriesArgs,
+    gqlBreweryListResult,
+} from '@brewhaus/shared/types/graphql';
 import { searchBreweries } from '../services/api';
 import { mapApiBrewery } from './map';
 import API_CONSTANTS from '../services/api/constants';
 
 export default async function gqlSearchBreweries(
     _parent: unknown,
-    args: { query: string; page?: number; perPage?: number },
+    args: QuerySearchBreweriesArgs,
 ): Promise<gqlBreweryListResult> {
     const { query, page, perPage } = args;
 
