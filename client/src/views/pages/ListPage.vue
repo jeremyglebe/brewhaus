@@ -29,21 +29,6 @@
       <div v-else class="space-y-4">
         <div v-for="brewery in breweries" :key="brewery.id" class="card bg-base-100 shadow-sm">
 
-          <!-- Manually entered card. -->
-          <!-- <div class="card-body">
-            <h2 class="card-title">{{ brewery.name }}</h2>
-
-            <p class="text-base-content/70">
-              {{ brewery.city }}<span v-if="brewery.stateProvince">, {{ brewery.stateProvince }}</span>
-            </p>
-
-            <div class="card-actions justify-start">
-              <div class="badge badge-outline">
-                {{ brewery.breweryType || 'Unknown type' }}
-              </div>
-            </div>
-          </div> -->
-
           <!-- Component-based card -->
           <BreweryListItem :brewery="brewery" @select="onListItemSelected"></BreweryListItem>
 
@@ -68,17 +53,17 @@
 </template>
 
 <script setup lang="ts">
-import type { BreweryResultItem } from '@/types/brewery';
 import { onBeforeUnmount, onMounted, ref, useTemplateRef } from 'vue';
-import { fetchBreweriesPage } from '@/services/brewery';
 import BreweryListItem from '@/components/BreweryListItem.vue';
 import DetailModal from '../modals/DetailModal.vue';
+import type { gqlBrewery } from '@brewhaus/shared/types/graphql';
+import fetchAllBreweries from '@/services/brewery/fetchAll';
 
 // Configuration
 const PER_PAGE = 12;
 
 // Reactive data state
-const breweries = ref<BreweryResultItem[]>([]);
+const breweries = ref<gqlBrewery[]>([]);
 const page = ref(1);
 const hasNextPage = ref(true);
 
@@ -106,10 +91,12 @@ async function loadFirstPage(): Promise<void> {
 
   try {
     // Use the brewery service to fetch the first page
-    const result = await fetchBreweriesPage({
+    const result = await fetchAllBreweries({
       page: 1,
       perPage: PER_PAGE,
     });
+
+    console.log('First page result:', result);
 
     // Update the data state
     breweries.value = result.items;
@@ -145,7 +132,7 @@ async function loadNextPage(): Promise<void> {
     const nextPage = page.value + 1;
 
     // Brewery service fetches the page
-    const result = await fetchBreweriesPage({
+    const result = await fetchAllBreweries({
       page: nextPage,
       perPage: PER_PAGE,
     });

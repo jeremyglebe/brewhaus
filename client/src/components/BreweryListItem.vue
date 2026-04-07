@@ -18,11 +18,12 @@
 </template>
 
 <script setup lang="ts">
-import type { BreweryResultItem } from '@/types/brewery'
+import type { gqlBrewery } from '@brewhaus/shared/types/graphql';
+
 
 // properties that can be passed to this component in the parent template
 defineProps<{
-  brewery: BreweryResultItem
+  brewery: gqlBrewery
 }>()
 
 // signals that can be listened to by the parent component when this component emits them

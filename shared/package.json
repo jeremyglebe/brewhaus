@@ -1,0 +1,15 @@
+{
+  "name": "@brewhaus/shared",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    "./types/*": {
+      "types": "./dist/types/*.d.ts",
+      "default": "./dist/types/*.js"
+    }
+  }
+}

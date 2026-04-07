@@ -1,20 +1,14 @@
 // the functions that answer queries
 
-import { getBreweries, getBreweryById } from '../services/brewery';
+import { gqlResolvers } from '@brewhaus/shared/types/graphql';
+import gqlListBreweries from './list';
+import gqlSearchBreweries from './search';
+import gqlBreweryFromId from './fromId';
 
-export const resolvers = {
-    // corresponds with the Query type in the schema
+export const resolvers: gqlResolvers = {
     Query: {
-        // handles query breweries(page: Int, perPage: Int, search: String)
-        // since page and perPage are defaulted in the schema, they will always be defined in args;
-        // they do not need to be optional
-        breweries: (_parent: unknown, args: { page: number; perPage: number; search?: string }) => {
-            return getBreweries({ searchName: args.search, page: args.page, perPage: args.perPage });
-        },
-
-        // handles query brewery(id: ID!)
-        brewery: (_parent: unknown, args: { id: string }) => {
-            return getBreweryById(args.id);
-        },
+        listBreweries: gqlListBreweries,
+        searchBreweries: gqlSearchBreweries,
+        brewery: gqlBreweryFromId,
     },
 };

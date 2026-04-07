@@ -32,15 +32,15 @@
 </template>
 
 <script setup lang="ts">
+import fetchBreweryById from '@/services/brewery/fetchById';
+import type { gqlBrewery } from '@brewhaus/shared/types/graphql';
 import { onMounted, ref, watch } from 'vue'
-import { fetchBreweryById } from '@/services/brewery'
-import type { BreweryDetailResult } from '@/types/brewery'
 
 const props = defineProps<{
   breweryId: string
 }>()
 
-const brewery = ref<BreweryDetailResult | null>(null)
+const brewery = ref<gqlBrewery | null>(null)
 const loading = ref(true)
 const errorMessage = ref<string | null>(null)
 
@@ -49,7 +49,7 @@ async function loadBrewery(): Promise<void> {
   errorMessage.value = null
 
   try {
-    brewery.value = await fetchBreweryById(props.breweryId)
+    brewery.value = await fetchBreweryById({ id: props.breweryId })
   } catch (error) {
     errorMessage.value =
       error instanceof Error ? error.message : 'Unknown error'

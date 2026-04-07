@@ -19,12 +19,8 @@
               <span class="label-text">Brewery name</span>
             </div>
 
-            <input
-              v-model="searchInput"
-              type="text"
-              placeholder="Search breweries..."
-              class="input input-bordered w-full"
-            />
+            <input v-model="searchInput" type="text" placeholder="Search breweries..."
+              class="input input-bordered w-full" />
           </label>
 
           <div class="card-actions justify-end">
@@ -37,10 +33,7 @@
       </form>
 
       <!-- Initial guidance -->
-      <div
-        v-if="!hasSearched && !loading && !errorMessage"
-        class="alert bg-base-100 shadow-sm"
-      >
+      <div v-if="!hasSearched && !loading && !errorMessage" class="alert bg-base-100 shadow-sm">
         <span>Enter a brewery name and search.</span>
       </div>
 
@@ -50,24 +43,14 @@
       </div>
 
       <!-- Empty state -->
-      <div
-        v-else-if="hasSearched && !loading && breweries.length === 0"
-        class="alert bg-base-100 shadow-sm"
-      >
+      <div v-else-if="hasSearched && !loading && breweries.length === 0" class="alert bg-base-100 shadow-sm">
         <span>No breweries found.</span>
       </div>
 
       <!-- Results -->
       <div v-else-if="breweries.length > 0" class="space-y-4">
-        <div
-          v-for="brewery in breweries"
-          :key="brewery.id"
-          class="card bg-base-100 shadow-sm"
-        >
-          <BreweryListItem
-            :brewery="brewery"
-            @select="onListItemSelected"
-          />
+        <div v-for="brewery in breweries" :key="brewery.id" class="card bg-base-100 shadow-sm">
+          <BreweryListItem :brewery="brewery" @select="onListItemSelected" />
         </div>
 
         <DetailModal ref="modalRef" />
@@ -78,15 +61,13 @@
 
 <script setup lang="ts">
 import { ref, useTemplateRef } from 'vue'
-import type { BreweryResultItem } from '@/types/brewery'
-import { fetchBreweriesPage } from '@/services/brewery'
 import BreweryListItem from '@/components/BreweryListItem.vue'
 import DetailModal from '../modals/DetailModal.vue'
-
-const SEARCH_RESULTS_PER_PAGE = 12
+import type { gqlBrewery } from '@brewhaus/shared/types/graphql'
+import fetchBreweriesBySearch from '@/services/brewery/fetchBySearch'
 
 const searchInput = ref('')
-const breweries = ref<BreweryResultItem[]>([])
+const breweries = ref<gqlBrewery[]>([])
 
 const loading = ref(false)
 const errorMessage = ref<string | null>(null)
@@ -108,10 +89,8 @@ async function submitSearch(): Promise<void> {
   hasSearched.value = true
 
   try {
-    const result = await fetchBreweriesPage({
-      page: 1,
-      perPage: SEARCH_RESULTS_PER_PAGE,
-      search: trimmedSearch,
+    const result = await fetchBreweriesBySearch({
+      query: trimmedSearch,
     })
 
     breweries.value = result.items

@@ -1,19 +1,28 @@
-import { gql } from '@apollo/client'
+import { gql } from '@apollo/client';
 
 export const QUERIES = Object.freeze({
   ALL_BREWERIES: gql`
-    query AllBreweries($page: Int!, $perPage: Int!, $search: String) {
-      breweries(page: $page, perPage: $perPage, search: $search) {
-        items {
-          id
-          name
-          city
-          stateProvince
-          breweryType
-        }
+    query AllBreweries($page: Int!, $perPage: Int!) {
+      listBreweries(page: $page, perPage: $perPage) {
         page
         perPage
         hasNextPage
+        items {
+          id
+          name
+          breweryType
+          address1
+          address2
+          address3
+          city
+          stateProvince
+          postalCode
+          country
+          longitude
+          latitude
+          phone
+          websiteUrl
+        }
       }
     }
   `,
@@ -37,4 +46,29 @@ export const QUERIES = Object.freeze({
       }
     }
   `,
-})
+  SEARCH_BREWERIES: gql`
+    query SearchBreweries($query: String!, $page: Int, $perPage: Int) {
+      searchBreweries(query: $query, page: $page, perPage: $perPage) {
+        page
+        perPage
+        hasNextPage
+        items {
+          id
+          name
+          breweryType
+          address1
+          address2
+          address3
+          city
+          stateProvince
+          postalCode
+          country
+          longitude
+          latitude
+          phone
+          websiteUrl
+        }
+      }
+    }
+  `,
+});
