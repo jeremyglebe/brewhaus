@@ -70,7 +70,7 @@ export interface gqlQuery {
 
 export interface gqlResolvers {
     Query: gqlQuery;
-    // Apollo expects arbitrary keys for types of resolvers, so we need to allow for that
-    // So while this type won't be fully type-safe, it will at least ensure that the Query field is correctly typed
+    // Apollo expects arbitrary keys for resolver types, so an index signature is required.
+    // This shape is not fully type-safe, but it keeps the Query field strongly typed.
     [typeName: string]: any;
 }

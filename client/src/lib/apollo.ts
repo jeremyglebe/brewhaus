@@ -6,7 +6,6 @@ const httpLink = new HttpLink({
 
 export const apolloClient = new ApolloClient({
   link: httpLink,
-  // need this explained- just specifying what type of cache is used?
-  // I guess in case file cacheing can be used?
+  // Configure Apollo to use its standard in-memory normalized cache.
   cache: new InMemoryCache(),
 })

@@ -1,48 +1,61 @@
-# .
+# Brewhaus Client
 
-This template should help get you started developing with Vue 3 in Vite.
+Frontend application for Brewhaus, built with Vue 3, TypeScript, Tailwind CSS, daisyUI, and Apollo Client.
 
-## Recommended IDE Setup
+## Purpose
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+The client provides:
 
-## Recommended Browser Setup
+- Brewery list browsing
+- Filtered listing
+- Infinite-scroll list mode
+- Alternate paginated list mode
+- Search flow
+- Brewery details via modal and dedicated route
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+## Prerequisites
 
-## Type Support for `.vue` Imports in TS
+- Node.js 20+
+- npm 10+
+- Server running locally at `http://localhost:4000/graphql`
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
+## Install
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+## Development
 
 ```sh
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+Starts the Vite development server for the client.
+
+## Build
 
 ```sh
 npm run build
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+Runs type-checking and creates a production build.
+
+## Lint
 
 ```sh
 npm run lint
 ```
+
+Runs ESLint for the client codebase.
+
+## Scripts
+
+- `npm run dev`: start development server
+- `npm run build`: type-check and production build
+- `npm run lint`: lint source files
+
+## Notes
+
+- The default list route uses infinite scroll.
+- The alternate paginated list is available via manual route entry at `/list-paginated`.

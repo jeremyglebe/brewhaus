@@ -40,7 +40,7 @@
         <DetailModal ref="modalRef" />
 
         <!-- Sentinel observed by IntersectionObserver.
-             When it enters the viewport, we try to load the next page. -->
+             When it enters the viewport, the app attempts to load the next page. -->
         <div ref="sentinel" class="py-4">
           <div v-if="loadingMore" class="flex justify-center">
             <span class="loading loading-infinity loading-xl"></span>
@@ -173,7 +173,7 @@ watch(sentinelElement, (el) => {
   // targeted element and an ancestor (or the viewport by default).
   // The root would be specified in the constructor, while the target element is observed via the observe() method.
   // (There can be multiple targets for a single observer, but each observer will share the same root and options.)
-  // In this case we want to check against the viewport, so we don't specify a root.
+  // The app checks against the viewport, so a root is not specified.
   observer = new IntersectionObserver((entries: IntersectionObserverEntry[]) => {
     // Get the first entry which has changed intersection status.
     // There should only be one since the app only observes one element. There could be multiple
