@@ -8,13 +8,9 @@ generates:
       - typescript-resolvers
     config:
       useTypeImports: true
-      enumValues:
-        BreweryType: ../../common/enums#BreweryType
   ./types/graphql/generated/operations.ts:
     plugins:
       - typescript
       - typescript-operations
     config:
       useTypeImports: true
-      enumValues:
-        BreweryType: ../../common/enums#BreweryType

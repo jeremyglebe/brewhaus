@@ -1,4 +1,3 @@
-import type { BreweryType } from '../../common/enums';
 import type { GraphQLResolveInfo } from 'graphql';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -7,7 +6,6 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
-export type EnumResolverSignature<T, AllowedValues = any> = { [key in keyof T]?: AllowedValues };
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -61,7 +59,18 @@ export type BreweryListResult = {
   perPage: Scalars['Int']['output'];
 };
 
-export { BreweryType };
+export enum BreweryType {
+  Bar = 'bar',
+  Brewpub = 'brewpub',
+  Closed = 'closed',
+  Contract = 'contract',
+  Large = 'large',
+  Micro = 'micro',
+  Nano = 'nano',
+  Planning = 'planning',
+  Proprietor = 'proprietor',
+  Regional = 'regional'
+}
 
 export type Query = {
   __typename?: 'Query';
@@ -229,8 +238,6 @@ export type BreweryListResultResolvers<ContextType = any, ParentType extends Res
   perPage?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
 };
 
-export type BreweryTypeResolvers = EnumResolverSignature<{ bar?: any, brewpub?: any, closed?: any, contract?: any, large?: any, micro?: any, nano?: any, planning?: any, proprietor?: any, regional?: any }, ResolversTypes['BreweryType']>;
-
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   brewery?: Resolver<ResolversTypes['Brewery'], ParentType, ContextType, RequireFields<QueryBreweryArgs, 'id'>>;
   listBreweries?: Resolver<ResolversTypes['BreweryListResult'], ParentType, ContextType, RequireFields<QueryListBreweriesArgs, 'page' | 'perPage'>>;
@@ -242,7 +249,6 @@ export type Resolvers<ContextType = any> = {
   Brewery?: BreweryResolvers<ContextType>;
   BreweryListMetaResult?: BreweryListMetaResultResolvers<ContextType>;
   BreweryListResult?: BreweryListResultResolvers<ContextType>;
-  BreweryType?: BreweryTypeResolvers;
   Query?: QueryResolvers<ContextType>;
 };
 

@@ -3,7 +3,6 @@
     <input type="checkbox" />
     <div class="collapse-title text-base font-semibold">Filter Breweries</div>
     <div class="collapse-content pt-0">
-
       <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
         <!-- Brewery Type -->
         <label class="form-control w-full">
@@ -55,7 +54,7 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue';
-import { BreweryType } from '@brewhaus/shared/types/enums';
+import { BreweryType } from '@brewhaus/shared/types/graphql/generated/schema';
 import type { BreweryListFilters } from '@/types/graphql';
 
 const emit = defineEmits<{

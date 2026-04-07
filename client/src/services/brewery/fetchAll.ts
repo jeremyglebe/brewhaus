@@ -1,10 +1,6 @@
 import { QUERIES } from '@/graphql/queries';
 import { apolloClient } from '@/lib/apollo';
-import type {
-  AllBreweriesQuery,
-  AllBreweriesQueryVariables,
-  BreweryList,
-} from '@/types/graphql';
+import type { AllBreweriesQuery, AllBreweriesQueryVariables, BreweryList } from '@/types/graphql';
 
 export default async function fetchAllBreweries(
   variables: AllBreweriesQueryVariables,
@@ -16,8 +12,6 @@ export default async function fetchAllBreweries(
     variables,
     fetchPolicy: 'network-only',
   });
-
-  console.log('Fetched breweries page data:', data);
 
   if (!data) {
     throw new Error('No data returned from breweries page query');

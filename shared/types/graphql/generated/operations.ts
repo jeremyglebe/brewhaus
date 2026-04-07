@@ -1,4 +1,3 @@
-import type { BreweryType } from '../../common/enums';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -58,7 +57,18 @@ export type BreweryListResult = {
   perPage: Scalars['Int']['output'];
 };
 
-export { BreweryType };
+export enum BreweryType {
+  Bar = 'bar',
+  Brewpub = 'brewpub',
+  Closed = 'closed',
+  Contract = 'contract',
+  Large = 'large',
+  Micro = 'micro',
+  Nano = 'nano',
+  Planning = 'planning',
+  Proprietor = 'proprietor',
+  Regional = 'regional'
+}
 
 export type Query = {
   __typename?: 'Query';
