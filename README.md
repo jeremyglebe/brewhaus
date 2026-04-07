@@ -25,8 +25,8 @@ In both the client and the server directories, execute this command:
 - ✅ Mono-repo setup with shared project
 - ✅ Mobile-app ready UI
 - ✅ Filters available on List page
-- 🔎 Save Favorite Breweries
-  - 🔎 Route to the standalone page when accessed from the favorites menu
+- ✅ Save Favorite Breweries
+  - ✅ Route to the standalone page when accessed from the favorites menu
 - ✅ Settings Menu to Switch Between Pagination/Infinite Scroll
   - ✅ Implement Pagination version of the List Page
 - 🔎 Random Images for each Brewery
