@@ -58,8 +58,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { BreweryListMode } from '@/services/preferences/listMode';
-import { getListModePreference, setListModePreference } from '@/services/preferences/listMode';
+import type { BreweryListMode } from '@/services/preferences';
+import { getListModePreference, setListModePreference } from '@/services/preferences';
 
 const selectedMode = ref<BreweryListMode>(getListModePreference());
 

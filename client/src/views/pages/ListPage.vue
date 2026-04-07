@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { getListModePreference, resolveListModeRoute } from '@/services/preferences/listMode';
+import { getListModePreference, resolveListModeRoute } from '@/services/preferences';
 
 const router = useRouter();
 
