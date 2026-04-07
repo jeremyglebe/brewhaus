@@ -56,10 +56,10 @@
 <script setup lang="ts">
 import { reactive } from 'vue';
 import { BreweryType } from '@brewhaus/shared/types/enums';
-import type { gqlBreweryListFilters } from '@brewhaus/shared/types/graphql';
+import type { BreweryListFilters } from '@/types/graphql';
 
 const emit = defineEmits<{
-  (e: 'apply', filters: gqlBreweryListFilters): void;
+  (e: 'apply', filters: BreweryListFilters): void;
   (e: 'clear'): void;
 }>();
 
@@ -78,7 +78,7 @@ const breweryTypeOptions: { value: BreweryType; label: string }[] = [
 ];
 
 // Draft state is local to this component; the parent only receives finalized values on Apply.
-const draft = reactive<gqlBreweryListFilters>({
+const draft = reactive<BreweryListFilters>({
   byType: null,
   byState: null,
   byCountry: null,

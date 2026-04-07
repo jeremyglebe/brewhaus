@@ -1,7 +1,20 @@
+enum BreweryType {
+  micro
+  nano
+  regional
+  brewpub
+  large
+  planning
+  bar
+  contract
+  proprietor
+  closed
+}
+
 type Brewery {
   id: ID!
   name: String!
-  breweryType: String
+  breweryType: BreweryType
   address1: String
   address2: String
   address3: String
@@ -34,7 +47,7 @@ input BreweryListFilters {
   byCountry: String
   byState: String
   byPostal: String
-  byType: String
+  byType: BreweryType
 }
 
 type Query {

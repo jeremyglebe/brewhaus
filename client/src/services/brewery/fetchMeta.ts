@@ -3,11 +3,12 @@ import { apolloClient } from '@/lib/apollo';
 import type {
   AllBreweriesMetaQuery,
   AllBreweriesMetaQueryVariables,
-} from '@brewhaus/shared/types/graphql/generated/operations';
+  BreweryListMeta,
+} from '@/types/graphql';
 
 export default async function fetchBreweriesMeta(
   variables: AllBreweriesMetaQueryVariables,
-): Promise<AllBreweriesMetaQuery['listBreweriesMeta']> {
+): Promise<BreweryListMeta> {
   const { data } = await apolloClient.query<AllBreweriesMetaQuery, AllBreweriesMetaQueryVariables>({
     query: QUERIES.ALL_BREWERIES_META,
     variables,

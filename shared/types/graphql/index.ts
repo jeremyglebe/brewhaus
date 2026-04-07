@@ -1,37 +1,18 @@
-import type { BreweryType } from '../common/enums';
-import type {
-    BreweryListFilters,
-    Resolvers,
-} from './generated/schema';
-import type {
-    AllBreweriesMetaQuery,
-    AllBreweriesQuery,
-    BreweryByIdQuery,
-    SearchBreweriesQuery,
-} from './generated/operations';
+import type { QueryListBreweriesArgs } from './generated/schema';
 
-export type gqlBrewery = BreweryByIdQuery['brewery'];
-
-export type gqlBreweryListResult = AllBreweriesQuery['listBreweries'];
-
-export type gqlBreweryListMetaResult = AllBreweriesMetaQuery['listBreweriesMeta'];
-
-export type gqlSearchBreweriesResult = SearchBreweriesQuery['searchBreweries'];
-
-export type gqlBreweryListFilters = Omit<BreweryListFilters, 'byType'> & {
-    byType?: BreweryType | null;
-};
-
-export type gqlQuery = NonNullable<Resolvers['Query']>;
-
-export type gqlResolvers = Resolvers;
+export type BreweryListFiltersInput = NonNullable<QueryListBreweriesArgs['filters']>;
 
 export type {
+    Brewery,
     BreweryListFilters,
+    BreweryListMetaResult,
+    BreweryListResult,
+    BreweryType,
     QueryBreweryArgs,
     QueryListBreweriesArgs,
     QueryListBreweriesMetaArgs,
     QuerySearchBreweriesArgs,
+    QueryResolvers,
     Resolvers,
 } from './generated/schema';
 

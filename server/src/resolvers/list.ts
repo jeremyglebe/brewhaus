@@ -1,8 +1,7 @@
 import {
+    BreweryListResult,
     QueryListBreweriesArgs,
-    gqlBreweryListResult,
 } from '@brewhaus/shared/types/graphql';
-import type { BreweryType } from '@brewhaus/shared/types/common';
 import { listBreweries } from '../services/api';
 import { mapApiBrewery } from './map';
 import API_CONSTANTS from '../services/api/constants';
@@ -10,7 +9,7 @@ import API_CONSTANTS from '../services/api/constants';
 export default async function gqlListBreweries(
     _parent: unknown,
     args: QueryListBreweriesArgs,
-): Promise<gqlBreweryListResult> {
+): Promise<BreweryListResult> {
     const { page, perPage, filters } = args;
 
     // Provide default values
@@ -25,7 +24,7 @@ export default async function gqlListBreweries(
         by_country: filters?.byCountry ?? undefined,
         by_state: filters?.byState ?? undefined,
         by_postal: filters?.byPostal ?? undefined,
-        by_type: (filters?.byType as BreweryType | null | undefined) ?? undefined,
+        by_type: filters?.byType ?? undefined,
     });
 
     // Extract data from response

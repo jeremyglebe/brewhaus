@@ -51,14 +51,14 @@ import { HeartIcon as HeartOutlineIcon } from '@heroicons/vue/24/outline';
 import fetchBreweryById from '@/services/brewery/fetchById';
 import { useFavorites } from '@/composables/useFavorites';
 import { createFavoriteBrewerySummary } from '@/services/favorites';
-import type { gqlBrewery } from '@brewhaus/shared/types/graphql';
+import type { Brewery } from '@/types/graphql';
 import { onMounted, ref, watch } from 'vue'
 
 const props = defineProps<{
   breweryId: string
 }>()
 
-const brewery = ref<gqlBrewery | null>(null)
+const brewery = ref<Brewery | null>(null)
 const loading = ref(true)
 const errorMessage = ref<string | null>(null)
 const { isFavorite, toggleFavorite } = useFavorites()

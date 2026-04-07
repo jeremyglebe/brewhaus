@@ -1,7 +1,7 @@
-import { gqlBrewery } from '@brewhaus/shared/types/graphql';
+import type { Brewery } from '@brewhaus/shared/types/graphql';
 import { ApiBrewery } from '../services/api/types';
 
-export function mapApiBrewery(response: ApiBrewery): gqlBrewery {
+export function mapApiBrewery(response: ApiBrewery): Brewery {
     return {
         id: response.id,
         name: response.name,

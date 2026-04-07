@@ -63,11 +63,11 @@
 import { ref, useTemplateRef } from 'vue'
 import BreweryListItem from '@/components/BreweryListItem.vue'
 import DetailModal from '../modals/DetailModal.vue'
-import type { gqlBrewery } from '@brewhaus/shared/types/graphql'
+import type { Brewery } from '@/types/graphql'
 import fetchBreweriesBySearch from '@/services/brewery/fetchBySearch'
 
 const searchInput = ref('')
-const breweries = ref<gqlBrewery[]>([])
+const breweries = ref<Brewery[]>([])
 
 const loading = ref(false)
 const errorMessage = ref<string | null>(null)

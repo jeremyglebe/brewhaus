@@ -150,7 +150,7 @@ import { computed, ref, useTemplateRef } from 'vue';
 import BreweryListItem from '@/components/BreweryListItem.vue';
 import BreweryFilters from '@/components/BreweryFilters.vue';
 import DetailModal from '../modals/DetailModal.vue';
-import type { gqlBrewery, gqlBreweryListFilters } from '@brewhaus/shared/types/graphql';
+import type { Brewery, BreweryListFilters } from '@/types/graphql';
 import fetchAllBreweries from '@/services/brewery/fetchAll';
 import fetchBreweriesMeta from '@/services/brewery/fetchMeta';
 
@@ -160,11 +160,11 @@ type PaginationItem =
   | { type: 'page'; value: number; label: string; key: string }
   | { type: 'ellipsis'; label: string; key: string };
 
-const breweries = ref<gqlBrewery[]>([]);
+const breweries = ref<Brewery[]>([]);
 const currentPage = ref(1);
 const totalPages = ref(1);
 const totalCount = ref(0);
-const activeFilters = ref<gqlBreweryListFilters | null>(null);
+const activeFilters = ref<BreweryListFilters | null>(null);
 
 const initialLoading = ref(true);
 const pageLoading = ref(false);
@@ -266,7 +266,7 @@ function onListItemSelected(breweryId: string): void {
   modal.value?.open(breweryId);
 }
 
-function onFiltersApply(filters: gqlBreweryListFilters): void {
+function onFiltersApply(filters: BreweryListFilters): void {
   activeFilters.value = filters;
   void refreshMetaAndPage(1);
 }

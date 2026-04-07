@@ -1,6 +1,6 @@
 import {
+    BreweryListResult,
     QuerySearchBreweriesArgs,
-    gqlBreweryListResult,
 } from '@brewhaus/shared/types/graphql';
 import { searchBreweries } from '../services/api';
 import { mapApiBrewery } from './map';
@@ -9,7 +9,7 @@ import API_CONSTANTS from '../services/api/constants';
 export default async function gqlSearchBreweries(
     _parent: unknown,
     args: QuerySearchBreweriesArgs,
-): Promise<gqlBreweryListResult> {
+): Promise<BreweryListResult> {
     const { query, page, perPage } = args;
 
     // Provide default values

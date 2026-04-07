@@ -1,4 +1,4 @@
-import type { gqlBrewery } from '@brewhaus/shared/types/graphql';
+import type { Brewery } from '@/types/graphql';
 import { STORAGE_KEYS } from '@/services/storage/keys';
 import { readJson, writeJson } from '@/services/storage/localStorage';
 
@@ -40,7 +40,7 @@ function writeFavorites(favorites: FavoriteBrewery[]): FavoriteBrewery[] {
 }
 
 export function createFavoriteBrewerySummary(
-  brewery: Pick<gqlBrewery, 'id' | 'name' | 'city' | 'stateProvince'>,
+  brewery: Pick<Brewery, 'id' | 'name' | 'city' | 'stateProvince'>,
 ): FavoriteBrewery {
   return {
     id: brewery.id,

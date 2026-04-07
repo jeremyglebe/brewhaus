@@ -60,19 +60,19 @@ import { onBeforeUnmount, onMounted, ref, useTemplateRef, watch } from 'vue';
 import BreweryListItem from '@/components/BreweryListItem.vue';
 import BreweryFilters from '@/components/BreweryFilters.vue';
 import DetailModal from '../modals/DetailModal.vue';
-import type { gqlBrewery, gqlBreweryListFilters } from '@brewhaus/shared/types/graphql';
+import type { Brewery, BreweryListFilters } from '@/types/graphql';
 import fetchAllBreweries from '@/services/brewery/fetchAll';
 
 // Configuration
 const PER_PAGE = 12;
 
 // Reactive data state
-const breweries = ref<gqlBrewery[]>([]);
+const breweries = ref<Brewery[]>([]);
 const page = ref(1);
 const hasNextPage = ref(true);
 
 // Active filters — null means no filters are applied (default unfiltered list).
-const activeFilters = ref<gqlBreweryListFilters | null>(null);
+const activeFilters = ref<BreweryListFilters | null>(null);
 
 // Reactive loading state
 const initialLoading = ref(true);
@@ -196,7 +196,7 @@ function onListItemSelected(breweryId: string): void {
 }
 
 // Applying filters resets the list to page 1 with the new filter set active.
-function onFiltersApply(filters: gqlBreweryListFilters): void {
+function onFiltersApply(filters: BreweryListFilters): void {
   activeFilters.value = filters;
   void loadFirstPage();
 }

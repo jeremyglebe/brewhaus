@@ -1,12 +1,13 @@
 // the functions that answer queries
 
-import { gqlResolvers } from '@brewhaus/shared/types/graphql';
 import gqlListBreweries from './list';
 import gqlListBreweriesMeta from './listMeta';
 import gqlSearchBreweries from './search';
 import gqlBreweryFromId from './fromId';
 
-export const resolvers: gqlResolvers = {
+import type { Resolvers } from '@brewhaus/shared/types/graphql';
+
+export const resolvers: Resolvers = {
     Query: {
         listBreweries: gqlListBreweries,
         listBreweriesMeta: gqlListBreweriesMeta,
