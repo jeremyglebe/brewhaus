@@ -74,51 +74,51 @@
 </template>
 
 <script setup lang="ts">
-import { ref, useTemplateRef } from 'vue'
-import { RouterLink } from 'vue-router'
-import BreweryListItem from '@/components/BreweryListItem.vue'
-import BreweryDetails from '@/components/BreweryDetails.vue'
-import GenericModal from '@/components/ui/GenericModal.vue'
-import type { Brewery } from '@/types/graphql'
-import fetchBreweriesBySearch from '@/services/brewery/fetchBySearch'
+import { ref, useTemplateRef } from 'vue';
+import { RouterLink } from 'vue-router';
+import BreweryListItem from '@/components/BreweryListItem.vue';
+import BreweryDetails from '@/components/BreweryDetails.vue';
+import GenericModal from '@/components/ui/GenericModal.vue';
+import type { Brewery } from '@/types/graphql';
+import fetchBreweriesBySearch from '@/services/brewery/fetchBySearch';
 
-const searchInput = ref('')
-const breweries = ref<Brewery[]>([])
+const searchInput = ref('');
+const breweries = ref<Brewery[]>([]);
 
-const loading = ref(false)
-const errorMessage = ref<string | null>(null)
-const hasSearched = ref(false)
-const modal = useTemplateRef('modalRef')
+const loading = ref(false);
+const errorMessage = ref<string | null>(null);
+const hasSearched = ref(false);
+const detailModalRef = useTemplateRef('modalRef');
 
 async function submitSearch(): Promise<void> {
-  const trimmedSearch = searchInput.value.trim()
+  const trimmedSearch = searchInput.value.trim();
 
   if (!trimmedSearch) {
-    breweries.value = []
-    hasSearched.value = false
-    errorMessage.value = null
-    return
+    breweries.value = [];
+    hasSearched.value = false;
+    errorMessage.value = null;
+    return;
   }
 
-  loading.value = true
-  errorMessage.value = null
-  hasSearched.value = true
+  loading.value = true;
+  errorMessage.value = null;
+  hasSearched.value = true;
 
   try {
     const result = await fetchBreweriesBySearch({
       query: trimmedSearch,
-    })
+    });
 
-    breweries.value = result.items
+    breweries.value = result.items;
   } catch (error) {
     errorMessage.value =
-      error instanceof Error ? error.message : 'Unknown error'
+      error instanceof Error ? error.message : 'Unknown error';
   } finally {
-    loading.value = false
+    loading.value = false;
   }
 }
 
 function onListItemSelected(breweryId: string): void {
-  modal.value?.open({ breweryId })
+  detailModalRef.value?.open({ breweryId });
 }
 </script>

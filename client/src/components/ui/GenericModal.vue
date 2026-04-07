@@ -24,6 +24,7 @@
 import { ref } from 'vue';
 
 // Lightweight payload channel passed from open(data) to slot content.
+// Keeping this generic lets pages reuse one shell for list/search/detail flows.
 type ModalPayload = Record<string, unknown> | null;
 
 // Public imperative API for opening/closing the native dialog.
@@ -48,7 +49,7 @@ const emit = defineEmits<{
   (e: 'close'): void;
 }>();
 
-// Underlying native dialog element.
+// Native <dialog> keeps focus trapping and backdrop behavior simple.
 const dialogRef = ref<HTMLDialogElement | null>(null);
 
 // Payload is forwarded to slot content via #default="{ data }".

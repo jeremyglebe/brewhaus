@@ -4,6 +4,8 @@ import { ApiBrewery } from '../services/api/types';
 const IMAGE_WIDTH = 400;
 const IMAGE_HEIGHT = 300;
 
+// Centralized REST-to-GraphQL mapping keeps field-name translation out of individual resolvers.
+// The imageUrl field is intentionally synthetic so the client can render richer cards/details.
 export function mapApiBrewery(response: ApiBrewery): Brewery {
     return {
         id: response.id,

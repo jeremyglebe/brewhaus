@@ -4,6 +4,7 @@ function getBrowserStorage(): Storage | null {
   }
 
   try {
+    // Access can throw in privacy-restricted contexts, so storage reads stay fail-safe.
     return window.localStorage;
   } catch {
     return null;

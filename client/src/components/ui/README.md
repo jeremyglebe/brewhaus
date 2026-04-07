@@ -2,10 +2,13 @@
 
 This folder contains reusable UI primitives used across pages.
 
+These components are intentionally lightweight. They provide shared presentation and small imperative APIs, while page-level data fetching and domain decisions stay outside the UI layer.
+
 ## ToastManager.vue
 
 Purpose:
 - Renders stacked daisyUI toasts in one central location.
+- Keeps transient notification UI out of individual pages, cards, and modals.
 
 How it is controlled:
 - Imperatively through a template ref.
@@ -28,6 +31,7 @@ Purpose:
 Why this exists:
 - Prevents multiple toast containers in nested views/modals.
 - Keeps toast rendering centralized at root while callers remain lightweight.
+- Lets feature components describe user feedback without owning toast presentation.
 
 Usage:
 - In a feature component:
@@ -42,6 +46,7 @@ Requirements:
 
 Purpose:
 - Reusable modal shell built on native `<dialog>` with daisyUI modal styling.
+- Supports the app's "browse in context, then open full page if needed" detail pattern.
 
 How it is controlled:
 - Imperative ref methods:
@@ -83,3 +88,4 @@ Events:
 Design note:
 - Parent owns data fetching and validation.
 - Component only emits page intent and renders current state.
+- This keeps pagination behavior easy to review because the fetch logic remains in the page file.

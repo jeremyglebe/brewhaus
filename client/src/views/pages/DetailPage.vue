@@ -23,14 +23,15 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import { RouterLink, useRoute } from 'vue-router'
-import BreweryDetails from '../../components/BreweryDetails.vue'
+import { computed } from 'vue';
+import { RouterLink, useRoute } from 'vue-router';
+import BreweryDetails from '../../components/BreweryDetails.vue';
 
-const route = useRoute()
+const route = useRoute();
 
+// Standalone detail route used for favorites, deep links, and modal escape hatches.
 const breweryId = computed(() => {
-  const id = route.params.id
-  return typeof id === 'string' ? id : null
-})
+  const id = route.params.id;
+  return typeof id === 'string' ? id : null;
+});
 </script>

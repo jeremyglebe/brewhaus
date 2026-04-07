@@ -11,7 +11,7 @@ const toastManagerRef = ref<ToastManagerRef | null>(null);
  * This is intentionally fail-safe: if the app shell has not mounted yet,
  * calls are ignored rather than throwing in feature components.
  */
-function callToast(method: keyof ToastManagerRef, message: string): void {
+function dispatchToast(method: keyof ToastManagerRef, message: string): void {
   toastManagerRef.value?.[method](message);
 }
 
@@ -36,19 +36,19 @@ export function useToast() {
   return {
     // Green success toast for positive user actions.
     success: (message: string) => {
-      callToast('success', message);
+      dispatchToast('success', message);
     },
     // Red error toast for recoverable failures.
     error: (message: string) => {
-      callToast('error', message);
+      dispatchToast('error', message);
     },
     // Blue info toast for neutral state updates.
     info: (message: string) => {
-      callToast('info', message);
+      dispatchToast('info', message);
     },
     // Amber warning toast for cautionary messages.
     warning: (message: string) => {
-      callToast('warning', message);
+      dispatchToast('warning', message);
     },
   };
 }

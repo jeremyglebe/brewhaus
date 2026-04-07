@@ -70,7 +70,8 @@ export function useFavorites() {
 
   return {
     addFavorite,
-    // readonly prevents accidental writes from components.
+    // readonly prevents accidental writes from components and makes the service/
+    // composable boundary clearer during review.
     favorites: readonly(favorites),
     isFavorite,
     removeFavorite,

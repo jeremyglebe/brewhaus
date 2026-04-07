@@ -9,6 +9,9 @@ export type FavoriteBrewery = {
   stateProvince: string | null;
 };
 
+// Favorites intentionally persist only the small summary needed for drawer/list rendering.
+// This avoids storing the entire GraphQL object shape in localStorage.
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null;
 }
@@ -62,6 +65,7 @@ export function addFavorite(favorite: FavoriteBrewery): FavoriteBrewery[] {
   const favorites = readFavorites();
   const nextFavorites = [
     favorite,
+    // Re-adding a favorite moves it to the top and prevents duplicates.
     ...favorites.filter((existingFavorite) => existingFavorite.id !== favorite.id),
   ];
 

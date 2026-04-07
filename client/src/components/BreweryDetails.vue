@@ -71,7 +71,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { HeartIcon as HeartSolidIcon } from '@heroicons/vue/24/solid';
 import { HeartIcon as HeartOutlineIcon } from '@heroicons/vue/24/outline';
 import fetchBreweryById from '@/services/brewery/fetchById';
@@ -80,73 +80,77 @@ import { useToast } from '@/composables/useToast';
 import { createFavoriteBrewerySummary } from '@/services/favorites';
 import type { Brewery } from '@/types/graphql';
 import BreweryMapEmbed from '@/components/BreweryMapEmbed.vue';
-import { onMounted, ref, watch } from 'vue'
 
 const props = withDefaults(defineProps<{
-  breweryId: string
+  breweryId: string;
   showMap?: boolean
 }>(), {
   showMap: false,
-})
+});
 
-const brewery = ref<Brewery | null>(null)
-const loading = ref(true)
-const imageLoading = ref(true)
-const errorMessage = ref<string | null>(null)
-const { isFavorite, toggleFavorite } = useFavorites()
-const toast = useToast()
+const brewery = ref<Brewery | null>(null);
+const loading = ref(true);
+const imageLoading = ref(true);
+const errorMessage = ref<string | null>(null);
+const { isFavorite, toggleFavorite } = useFavorites();
+const toast = useToast();
 
+// The favorites service stores a compact summary instead of the full GraphQL result.
+// That keeps local persistence stable and avoids coupling storage to every UI field.
 const favoriteSummary = computed(() => {
   if (!brewery.value) {
-    return null
+    return null;
   }
 
-  return createFavoriteBrewerySummary(brewery.value)
-})
+  return createFavoriteBrewerySummary(brewery.value);
+});
 
 const favorite = computed(() => {
   if (!favoriteSummary.value) {
-    return false
+    return false;
   }
 
-  return isFavorite(favoriteSummary.value.id)
-})
+  return isFavorite(favoriteSummary.value.id);
+});
 
 const favoriteButtonClass = computed(() => {
-  return favorite.value ? 'btn-primary' : 'btn-outline'
-})
+  return favorite.value ? 'btn-primary' : 'btn-outline';
+});
 
 async function loadBrewery(): Promise<void> {
-  loading.value = true
-  imageLoading.value = true
-  errorMessage.value = null
+  loading.value = true;
+  imageLoading.value = true;
+  errorMessage.value = null;
 
   try {
-    brewery.value = await fetchBreweryById({ id: props.breweryId })
+    brewery.value = await fetchBreweryById({ id: props.breweryId });
   } catch (error) {
     errorMessage.value =
-      error instanceof Error ? error.message : 'Unknown error'
+      error instanceof Error ? error.message : 'Unknown error';
   } finally {
-    loading.value = false
+    loading.value = false;
   }
 }
 
 function onFavoriteToggle(): void {
   if (!favoriteSummary.value) {
-    return
+    return;
   }
 
-  const wasFavorite = favorite.value
-  toggleFavorite(favoriteSummary.value)
+  const wasFavorite = favorite.value;
+  toggleFavorite(favoriteSummary.value);
 
   if (wasFavorite) {
-    toast.info('Removed from favorites')
-    return
+    toast.info('Removed from favorites');
+    return;
   }
 
-  toast.success('Added to favorites')
+  toast.success('Added to favorites');
 }
 
-onMounted(loadBrewery)
-watch(() => props.breweryId, loadBrewery)
+onMounted(loadBrewery);
+
+// The same component is reused in both modal and route contexts, so watch the id prop
+// and reload when a different brewery is requested without remounting the parent shell.
+watch(() => props.breweryId, loadBrewery);
 </script>

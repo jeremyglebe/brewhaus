@@ -1,23 +1,23 @@
 # Brewhaus Client
 
-Frontend application for Brewhaus, built with Vue 3, TypeScript, Tailwind CSS, daisyUI, and Apollo Client.
+This package contains the Brewhaus frontend: a mobile-first Vue application that talks to the local GraphQL server and can also be packaged through Capacitor.
 
-## Purpose
+## What This Package Does
 
-The client provides:
+- renders the brewery list, search, settings, favorites, and detail flows
+- queries the local GraphQL server through Apollo Client
+- stores favorites and UI preferences locally on the device/browser
+- supports normal browser development and Android emulator development
+- provides the web layer used by the Capacitor native shells
 
-- Brewery list browsing
-- Filtered listing
-- Infinite-scroll list mode
-- Alternate paginated list mode
-- Search flow
-- Brewery details via modal and dedicated route
+## Stack
 
-## Prerequisites
-
-- Node.js 20+
-- npm 10+
-- Server running locally at `http://localhost:4000/graphql`
+- Vue 3 + TypeScript
+- Vite
+- Vue Router
+- Apollo Client
+- Tailwind CSS + daisyUI
+- Capacitor
 
 ## Install
 
@@ -25,19 +25,11 @@ The client provides:
 npm install
 ```
 
-## Development
+The client also depends on the local shared package at `../shared`.
 
-```sh
-npm run dev
-```
+## Run In Browser Development
 
-Starts the Vite development server for the client.
-
-### Android Emulator Development
-
-Use this flow when running the app in the Android emulator against a local GraphQL server.
-
-1. Start the GraphQL server on the host machine (outside this folder):
+Start the GraphQL server first:
 
 ```sh
 cd ../server
@@ -45,35 +37,58 @@ npm install
 npm run dev
 ```
 
-2. Build and sync the client for Android mode:
+Then start the client:
+
+```sh
+cd ../client
+npm install
+npm run dev
+```
+
+Default local URLs:
+
+- Client: `http://localhost:5173`
+- GraphQL server: `http://localhost:4000/graphql`
+
+## Environment Modes
+
+The client expects `VITE_GRAPHQL_URL` to be set by the active Vite mode.
+
+Two important local modes are used in this project:
+
+- browser development: calls `http://localhost:4000/graphql`
+- Android emulator development: calls `http://10.0.2.2:4000/graphql`
+
+Why this matters:
+
+- in a normal desktop browser, `localhost` is the host machine
+- in an Android emulator, `localhost` points at the emulator itself
+- `10.0.2.2` is the Android emulator alias back to the host machine
+
+That is why the emulator mode must use a different GraphQL URL even when the server is running locally.
+
+## Android Emulator Workflow
+
+Use this when you want the Capacitor Android app to talk to the server running on the host machine.
+
+1. Start the local GraphQL server from `server/`.
+2. Build and sync the Android web assets from `client/`:
 
 ```sh
 npm run prepare:android
 ```
 
-3. Open Android Studio and run the emulator app:
+3. Open the native Android project:
 
 ```sh
 npx cap open android
 ```
 
-Optional: validate Android-mode env configuration in a browser tab before syncing:
+Optional browser check for Android-mode env behavior:
 
 ```sh
 npm run dev:android
 ```
-
-### Why 10.0.2.2 Works (and localhost Does Not)
-
-- In a browser on the host machine, `localhost` points to the host machine.
-- In an Android emulator, `localhost` points to the emulator device itself.
-- `10.0.2.2` is a special alias from the Android emulator to the host machine.
-- So for a host GraphQL server at `http://localhost:4000/graphql`, the emulator must call `http://10.0.2.2:4000/graphql`.
-
-Environment files are set up so this is automatic:
-
-- `.env.development` uses `http://localhost:4000/graphql`
-- `.env.android` uses `http://10.0.2.2:4000/graphql`
 
 ## Build
 
@@ -81,28 +96,7 @@ Environment files are set up so this is automatic:
 npm run build
 ```
 
-Runs type-checking and creates a production build.
-
-## Capacitor Integration
-
-This client includes Capacitor so it can be packaged as native iOS and Android apps.
-
-### Client setup
-
-```sh
-npm install
-npm run build
-npx cap sync
-```
-
-### Open platform projects
-
-```sh
-npx cap open android
-npx cap open ios
-```
-
-Tip: after client code changes, run `npm run build` and `npx cap sync` again before reopening or rebuilding native projects.
+This runs shared TypeScript compilation, client type-checking, and the Vite production build.
 
 ## Lint
 
@@ -110,19 +104,96 @@ Tip: after client code changes, run `npm run build` and `npx cap sync` again bef
 npm run lint
 ```
 
-Runs ESLint for the client codebase.
-
 ## Scripts
 
-- `npm run dev`: start development server
-- `npm run dev:android`: start development server using Android emulator endpoint mode
-- `npm run build`: type-check and production build
-- `npm run build:android`: type-check and build using Android mode (`.env.android`)
-- `npm run sync:android`: sync web assets and plugins to Android
-- `npm run prepare:android`: run Android-mode build, then Android sync
-- `npm run lint`: lint source files
+- `npm run dev`: start the Vite dev server for normal browser development
+- `npm run dev:android`: run the client with Android-emulator GraphQL env values
+- `npm run build`: type-check and build the web app
+- `npm run build:android`: build with Android-mode env values
+- `npm run sync:android`: sync Capacitor assets/plugins into the Android project
+- `npm run prepare:android`: Android build plus Capacitor sync
+- `npm run lint`: run oxlint and ESLint
 
-## Notes
+## GraphQL Client Setup
 
-- The default list route uses infinite scroll.
-- The alternate paginated list is available via manual route entry at `/list-paginated`.
+The client GraphQL flow is intentionally simple:
+
+- query documents live in `src/graphql/queries.ts`
+- Apollo Client is configured in `src/lib/apollo.ts`
+- feature-level fetch helpers in `src/services/brewery/` call Apollo
+- Vue pages/components consume those helpers rather than building queries inline
+
+That keeps page components focused on UI state and loading flow.
+
+## Shared Types And Generated Code
+
+This package consumes shared types from `@brewhaus/shared` and local generated GraphQL operation types.
+
+Relevant pieces:
+
+- shared schema source: `../shared/schema/schema.graphql`
+- codegen config: `../shared/codegen.yml`
+- generated operation/schema types: `../shared/types/graphql/generated/`
+
+You only need to rerun codegen when GraphQL contracts change.
+
+## UI And Mobile Shell Notes
+
+### App shell
+
+`src/App.vue` owns the global shell:
+
+- top navigation
+- favorites drawer
+- bottom mobile dock
+- centralized toast manager
+
+### Route and modal detail behavior
+
+List and search pages open brewery details in a modal so the user keeps context. A dedicated `/brewery/:id` route also exists for direct navigation, favorites, and a cleaner standalone mobile page.
+
+### Infinite scroll vs pagination
+
+Both list styles are implemented on purpose:
+
+- infinite scroll is the default, touch-friendly demo flow
+- pagination is available as a saved preference and as a more explicit reviewer-friendly alternative
+
+The current paginated route is `/list/paginated`.
+
+### Maps and geolocation
+
+The client uses a lightweight iframe-based map embed plus Capacitor geolocation for directions. That keeps the demo focused and avoids pulling in a full mapping SDK.
+
+## Capacitor Notes
+
+This package is structured so the same Vue app can run in a browser first and in native shells second.
+
+Basic Capacitor flow:
+
+```sh
+npm run build
+npx cap sync
+npx cap open android
+npx cap open ios
+```
+
+After web code changes, rebuild and sync before reopening or rebuilding native projects.
+
+Geolocation permissions are configured in the native projects:
+
+- iOS: `ios/App/App/Info.plist`
+- Android: `android/app/src/main/AndroidManifest.xml`
+
+## Reviewer Notes
+
+If you are skimming the codebase for architecture, the most useful files are:
+
+- `src/App.vue`
+- `src/router/index.ts`
+- `src/composables/useToast.ts`
+- `src/composables/useFavorites.ts`
+- `src/services/preferences/listMode.ts`
+- `src/views/pages/ListPageInfinite.vue`
+- `src/views/pages/ListPagePaginated.vue`
+- `src/components/BreweryDetails.vue`

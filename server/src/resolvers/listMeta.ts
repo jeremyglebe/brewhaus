@@ -5,6 +5,7 @@ import {
 import API_CONSTANTS from '../services/api/constants';
 import { listBreweriesMeta } from '../services/api';
 
+// Separate metadata query used by the explicit pagination UI.
 export default async function gqlListBreweriesMeta(
     _parent: unknown,
     args: QueryListBreweriesMetaArgs,
@@ -26,6 +27,7 @@ export default async function gqlListBreweriesMeta(
 
     const total = Number(apiResponse.total);
     const safeTotal = Number.isFinite(total) && total > 0 ? total : 0;
+    // The UI expects at least one page so the empty-state layout stays stable.
     const totalPages = safeTotal > 0 ? Math.ceil(safeTotal / resolvedPerPage) : 1;
 
     return {

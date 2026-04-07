@@ -7,6 +7,8 @@ type Preferences = {
   listMode: BreweryListMode;
 };
 
+// Infinite scroll is the default browsing mode, but pagination remains available
+// both for reviewer comparison and as a saved user preference.
 const DEFAULT_LIST_MODE: BreweryListMode = 'infinite';
 const DEFAULT_PREFERENCES: Preferences = {
   listMode: DEFAULT_LIST_MODE,
@@ -52,6 +54,8 @@ export function getPreferences(): Preferences {
   const legacyListMode = readStoredString(STORAGE_KEYS.legacyListMode);
 
   if (isValidListMode(legacyListMode)) {
+    // Preserve older saved data transparently so the rest of the app only needs
+    // to understand the current preferences object shape.
     const migratedPreferences: Preferences = {
       ...DEFAULT_PREFERENCES,
       listMode: legacyListMode,

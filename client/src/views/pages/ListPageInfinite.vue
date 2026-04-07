@@ -15,7 +15,7 @@
         </div>
       </div>
 
-      <!-- Compact filter panel above the list. -->
+      <!-- Filters stay outside the modal/detail flow so they always describe the active list state. -->
       <BreweryFilters @apply="onFiltersApply" @clear="onFiltersClear" />
 
       <!-- Initial loading state for the first page only. -->
@@ -51,9 +51,9 @@
           </template>
         </GenericModal>
 
-        <!-- Sentinel observed by IntersectionObserver.
+           <!-- Sentinel observed by IntersectionObserver.
              When it enters the viewport, the app attempts to load the next page. -->
-        <div ref="sentinel" class="py-4">
+           <div ref="sentinelRef" class="py-4">
           <div v-if="loadingMore" class="flex justify-center">
             <span class="loading loading-infinity loading-xl"></span>
           </div>
@@ -77,7 +77,7 @@ import GenericModal from '@/components/ui/GenericModal.vue';
 import type { Brewery, BreweryListFilters } from '@/types/graphql';
 import fetchAllBreweries from '@/services/brewery/fetchAll';
 
-// Configuration
+// Infinite scroll is the default list mode, so this page optimizes for a continuous feed.
 const PER_PAGE = 12;
 
 // Reactive data state
@@ -93,13 +93,13 @@ const initialLoading = ref(true);
 const loadingMore = ref(false);
 const errorMessage = ref<string | null>(null);
 
-// Modal reference for opening/closing the brewery detail modal from the list page
-const modal = useTemplateRef('modalRef');
+// Modal ref supports the route-vs-modal detail pattern used across browse flows.
+const detailModalRef = useTemplateRef('modalRef');
 
-// Sentinel element marking the end of the page, the observer triggers when it enters the viewport
-const sentinelElement = useTemplateRef('sentinel');
-// Observer which will trigger loading the next page when the sentinel enters the viewport
-let observer: IntersectionObserver | null = null;
+// Sentinel element marking the end of the page.
+const sentinelRef = useTemplateRef('sentinelRef');
+// Observer triggers loading the next page when the sentinel enters the viewport.
+let sentinelObserver: IntersectionObserver | null = null;
 
 /**
  * Loads the first page of content- this is separate to handle the
@@ -118,7 +118,7 @@ async function loadFirstPage(): Promise<void> {
       filters: activeFilters.value,
     });
 
-    // Update the data state
+    // Replace the current list when starting over from page 1.
     breweries.value = result.items;
     page.value = result.page;
     hasNextPage.value = result.hasNextPage;
@@ -175,11 +175,11 @@ async function loadNextPage(): Promise<void> {
 }
 
 // The sentinel lives inside v-else, so it unmounts while initialLoading is true and
-// gets a new DOM node when loading finishes
-// watching the ref reconnects the observer to the new element automatically each time.
-watch(sentinelElement, (el) => {
+// gets a new DOM node when loading finishes. Watching the ref reconnects the observer
+// to the current DOM node automatically.
+watch(sentinelRef, (el) => {
   // Disconnect any existing observer before potentially creating a new one.
-  observer?.disconnect();
+  sentinelObserver?.disconnect();
 
   if (!el) return;
 
@@ -188,7 +188,7 @@ watch(sentinelElement, (el) => {
   // The root would be specified in the constructor, while the target element is observed via the observe() method.
   // (There can be multiple targets for a single observer, but each observer will share the same root and options.)
   // The app checks against the viewport, so a root is not specified.
-  observer = new IntersectionObserver((entries: IntersectionObserverEntry[]) => {
+  sentinelObserver = new IntersectionObserver((entries: IntersectionObserverEntry[]) => {
     // Get the first entry which has changed intersection status.
     // There should only be one since the app only observes one element. There could be multiple
     // if the app was watching multiple sentinel elements, which is why the callback provides an array.
@@ -202,11 +202,11 @@ watch(sentinelElement, (el) => {
   });
 
   // Start watching the end of page sentinel
-  observer.observe(el);
+  sentinelObserver.observe(el);
 });
 
 function onListItemSelected(breweryId: string): void {
-  modal.value?.open({ breweryId });
+  detailModalRef.value?.open({ breweryId });
 }
 
 // Applying filters resets the list to page 1 with the new filter set active.
@@ -221,16 +221,14 @@ function onFiltersClear(): void {
   void loadFirstPage();
 }
 
-// lifecyle hook that runs when the user enters the page
-// handles the initial loading and setup
+// Kick off the first page after the component is mounted.
 onMounted(async () => {
   await loadFirstPage();
 });
 
-// lifecycle hook that runs when the user leaves the page
-// kills observers or other ongoing processes before exiting
+// Clean up the observer when leaving the page.
 onBeforeUnmount(() => {
-  observer?.disconnect();
+  sentinelObserver?.disconnect();
 });
 
 </script>

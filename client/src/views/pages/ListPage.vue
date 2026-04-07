@@ -6,6 +6,7 @@ import { getListModePreference, resolveListModeRoute } from '@/services/preferen
 const router = useRouter();
 
 onMounted(() => {
+  // `/` acts as a preference-aware landing route rather than owning a full list implementation.
   const preferredMode = getListModePreference();
   const targetRoute = resolveListModeRoute(preferredMode);
 

@@ -52,6 +52,7 @@ const alertClassByType: Record<ToastType, string> = {
 };
 
 // Adds a toast to the queue and schedules automatic removal.
+// A simple in-memory queue is enough because toasts are purely ephemeral UI state.
 function pushToast(type: ToastType, message: string): void {
   const trimmedMessage = message.trim();
 

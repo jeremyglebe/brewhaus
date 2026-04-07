@@ -7,12 +7,12 @@ import {
     ApiQuerySearch,
 } from './types';
 
-// typed wrapper for fetch
+// Thin typed fetch wrapper shared by all upstream API calls.
 async function fetchJson<T>(url: string): Promise<T> {
     const response = await fetch(url);
 
     if (!response.ok) {
-        // Check if there is a response body and attempt to read it
+        // Try to keep the upstream response body for local debugging when possible.
         let responseBody: string | undefined;
         try {
             responseBody = await response.text();
@@ -20,7 +20,7 @@ async function fetchJson<T>(url: string): Promise<T> {
             responseBody = undefined;
         }
 
-        // throw a formatted error
+        // Throw a structured error so resolver/page failures stay more understandable.
         throw new ApiError({
             message: `Open Brewery DB request failed: ${response.status} ${response.statusText}`,
             status: response.status,
@@ -42,6 +42,7 @@ async function fetchJson<T>(url: string): Promise<T> {
 export async function listBreweries(filters?: ApiQueryFilters): Promise<ApiBrewery[]> {
     const url = new URL(API_CONSTANTS.base_url);
 
+    // Filters are passed through one-for-one so the resolver layer can stay declarative.
     if (filters) {
         if (filters.by_city) url.searchParams.set('by_city', filters.by_city);
         if (filters.by_country) url.searchParams.set('by_country', filters.by_country);

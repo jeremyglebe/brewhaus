@@ -45,8 +45,8 @@ const props = defineProps<{
 }>();
 
 const toast = useToast();
-const currentLatitude = ref<number | null>(null);
-const currentLongitude = ref<number | null>(null);
+const originLatitude = ref<number | null>(null);
+const originLongitude = ref<number | null>(null);
 const gettingDirections = ref(false);
 
 const hasDestination = computed(() => {
@@ -54,7 +54,7 @@ const hasDestination = computed(() => {
 });
 
 const hasOrigin = computed(() => {
-  return currentLatitude.value != null && currentLongitude.value != null;
+  return originLatitude.value != null && originLongitude.value != null;
 });
 
 const embedUrl = computed(() => {
@@ -62,8 +62,10 @@ const embedUrl = computed(() => {
     return null;
   }
 
+  // The map intentionally uses a lightweight iframe embed rather than a full JS SDK.
+  // That keeps the demo easy to run while still showing location and directions behavior.
   if (hasOrigin.value) {
-    return `https://maps.google.com?saddr=${currentLatitude.value},${currentLongitude.value}&daddr=${props.latitude},${props.longitude}&output=embed`;
+    return `https://maps.google.com?saddr=${originLatitude.value},${originLongitude.value}&daddr=${props.latitude},${props.longitude}&output=embed`;
   }
 
   return `https://maps.google.com/maps?q=${props.latitude},${props.longitude}&z=14&output=embed`;
@@ -87,8 +89,8 @@ async function onGetDirections(): Promise<void> {
       maximumAge: 0,
     });
 
-    currentLatitude.value = position.coords.latitude;
-    currentLongitude.value = position.coords.longitude;
+    originLatitude.value = position.coords.latitude;
+    originLongitude.value = position.coords.longitude;
     toast.success('Directions loaded from your current location');
   } catch (error) {
     const message = error instanceof Error
@@ -102,7 +104,7 @@ async function onGetDirections(): Promise<void> {
 }
 
 function onResetMap(): void {
-  currentLatitude.value = null;
-  currentLongitude.value = null;
+  originLatitude.value = null;
+  originLongitude.value = null;
 }
 </script>

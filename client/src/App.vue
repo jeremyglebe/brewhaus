@@ -1,4 +1,5 @@
 <template>
+  <!-- App shell: persistent header, mobile dock, favorites drawer, and global toast host. -->
   <div class="drawer drawer-end">
     <input id="favorites-drawer" v-model="drawerOpen" type="checkbox" class="drawer-toggle" />
 
@@ -45,9 +46,11 @@
         </RouterLink>
       </nav>
 
+      <!-- Toast UI stays mounted once at the shell level so pages/modals can emit toasts globally. -->
       <ToastManager ref="toastManagerRef" />
     </div>
 
+    <!-- Favorites are shown in a drawer so they stay available from any page without a route change. -->
     <div class="drawer-side z-40">
       <label for="favorites-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
 
@@ -98,8 +101,9 @@ import beerMugSvg from '@/assets/beer-mug.svg';
 const route = useRoute();
 const drawerOpen = ref(false);
 const { favorites } = useFavorites();
-const toastManagerRef = useTemplateRef('toastManagerRef');
+const toastManagerInstance = useTemplateRef('toastManagerRef');
 
+// Home stays active for the redirect route and both list implementations.
 const isHomeActive = computed(() => {
   return route.path === '/' || route.path.startsWith('/list');
 });
@@ -115,7 +119,7 @@ function formatFavoriteLocation(favorite: FavoriteBrewery): string {
 }
 
 watch(() => route.fullPath, closeDrawer);
-watch(toastManagerRef, (manager) => {
+watch(toastManagerInstance, (manager) => {
   setToastManager(manager ?? null);
 }, { immediate: true });
 </script>

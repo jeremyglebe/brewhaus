@@ -6,6 +6,10 @@ import SearchPage from '@/views/pages/SearchPage.vue';
 import SettingsPage from '@/views/pages/SettingsPage.vue';
 import DetailPage from '@/views/pages/DetailPage.vue';
 
+// Routing strategy:
+// - `/` is a lightweight handoff route that redirects to the saved list mode.
+// - list/search pages can open detail content in a modal for in-context browsing.
+// - `/brewery/:id` remains available as a standalone page for deep links and favorites.
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [

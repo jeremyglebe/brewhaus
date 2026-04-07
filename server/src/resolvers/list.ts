@@ -6,17 +6,18 @@ import { listBreweries } from '../services/api';
 import { mapApiBrewery } from './map';
 import API_CONSTANTS from '../services/api/constants';
 
+// List query used by the default infinite-scroll experience and by paginated mode.
 export default async function gqlListBreweries(
     _parent: unknown,
     args: QueryListBreweriesArgs,
 ): Promise<BreweryListResult> {
     const { page, perPage, filters } = args;
 
-    // Provide default values
+    // Resolve explicit query args against shared API defaults.
     const resolvedPage = page ?? API_CONSTANTS.defaults.page;
     const resolvedPerPage = perPage ?? API_CONSTANTS.defaults.per_page;
 
-    // Get API response
+    // Translate GraphQL filter names into the upstream REST query shape.
     const apiResponse = await listBreweries({
         page: resolvedPage,
         per_page: resolvedPerPage,
@@ -27,7 +28,8 @@ export default async function gqlListBreweries(
         by_type: filters?.byType ?? undefined,
     });
 
-    // Extract data from response
+    // The upstream API does not expose a dedicated next-page flag,
+    // so a full page implies there may be another page available.
     const items = apiResponse.map(mapApiBrewery);
     const hasNextPage = items.length === resolvedPerPage;
 

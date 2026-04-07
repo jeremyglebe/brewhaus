@@ -81,6 +81,7 @@ import type { Brewery, BreweryListFilters } from '@/types/graphql';
 import fetchAllBreweries from '@/services/brewery/fetchAll';
 import fetchBreweriesMeta from '@/services/brewery/fetchMeta';
 
+// Paginated mode fetches the list and metadata together so the page controls can stay accurate.
 const PER_PAGE = 12;
 
 const breweries = ref<Brewery[]>([]);
@@ -93,13 +94,15 @@ const initialLoading = ref(true);
 const pageLoading = ref(false);
 const errorMessage = ref<string | null>(null);
 
-const modal = useTemplateRef('modalRef');
+const detailModalRef = useTemplateRef('modalRef');
 
 async function refreshMetaAndPage(page: number): Promise<void> {
   pageLoading.value = true;
   errorMessage.value = null;
 
   try {
+    // Metadata and page items come from separate GraphQL queries because they drive
+    // different UI needs in the paginated experience.
     const [metaResult, listResult] = await Promise.all([
       fetchBreweriesMeta({
         page,
@@ -143,7 +146,7 @@ function onNavigate(page: number): void {
 }
 
 function onListItemSelected(breweryId: string): void {
-  modal.value?.open({ breweryId });
+  detailModalRef.value?.open({ breweryId });
 }
 
 function onFiltersApply(filters: BreweryListFilters): void {

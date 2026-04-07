@@ -1,4 +1,4 @@
-// Express + Apollo bootstrapping
+// Express + Apollo bootstrapping for the local GraphQL composition server.
 
 import express from 'express';
 import cors from 'cors';
@@ -9,15 +9,15 @@ import { typeDefs } from './schema/typeDefs';
 import { resolvers } from './resolvers';
 
 async function start(): Promise<void> {
-    // create an express application
+    // Express hosts both the GraphQL endpoint and a small health check for local dev.
     const app = express();
 
-    // to allow requests from the frontend
+    // Allow local browser and emulator clients to talk to the API.
     app.use(cors());
-    // to let express parse json request bodies (needed for graphql)
+    // GraphQL POST requests arrive as JSON.
     app.use(express.json());
 
-    // create the graphql server
+    // Apollo is given the shared schema SDL and typed resolvers.
     const apolloServer = new ApolloServer({
         typeDefs,
         resolvers,
@@ -25,15 +25,15 @@ async function start(): Promise<void> {
 
     await apolloServer.start();
 
-    // connect the apollo server to the express app on the /graphql endpoint
+    // Mount GraphQL under a single local endpoint consumed by the client app.
     app.use('/graphql', expressMiddleware(apolloServer));
 
-    // create a health check endpoint
+    // Simple health endpoint for quick local smoke checks.
     app.get('/health', (_req, res) => {
         res.status(200).json({ status: 'ok' });
     });
 
-    // start the express server
+    // Default host/port support browser and Android-emulator development.
     const PORT = Number(process.env.PORT || 4000);
     const HOST = process.env.HOST || '0.0.0.0';
 
@@ -45,7 +45,7 @@ async function start(): Promise<void> {
     });
 }
 
-// Start the server and catch any startup errors
+// Surface startup failures clearly in local development.
 start().catch((error) => {
     console.error('Error starting the server:', error);
     process.exit(1);
