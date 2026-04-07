@@ -34,7 +34,9 @@ In both the client and the server directories, execute this command:
   - Imagine the hypothetical company's API supported photos of the business, this demonstrates how it may be displayed
 - ✅ Lat/Lon Maps Display
   - Implemented via Google Maps iFrame (rather than api integration); minimal map features for demonstration only
-- 🔎 Capacitor Integration
+  - The Google Maps iFrame implementation also allows the user to get directions via GeoLocation
+- ✅ Capacitor Integration
+  - ✅ Integrated the Geolocation Plugin
 
 ## Stack
 
