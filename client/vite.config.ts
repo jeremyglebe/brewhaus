@@ -18,6 +18,10 @@ export default defineConfig(
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url)),
+        // Point Vite at the TS source directly so it never serves the CJS dist.
+        // The shared package compiles to CommonJS for the server; aliasing here
+        // means the browser build gets native ESM without a dual-build setup.
+        '@brewhaus/shared': fileURLToPath(new URL('../shared', import.meta.url)),
       },
     },
   }),

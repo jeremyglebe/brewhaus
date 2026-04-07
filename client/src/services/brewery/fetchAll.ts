@@ -1,10 +1,11 @@
 import { QUERIES } from '@/graphql/queries';
 import { apolloClient } from '@/lib/apollo';
-import type { gqlBreweryListResult } from '@brewhaus/shared/types/graphql';
+import type { gqlBreweryListFilters, gqlBreweryListResult } from '@brewhaus/shared/types/graphql';
 
 type QueryParameters = {
   page: number;
   perPage: number;
+  filters?: gqlBreweryListFilters | null;
 };
 
 type QueryResult = {

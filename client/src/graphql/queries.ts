@@ -2,8 +2,8 @@ import { gql } from '@apollo/client';
 
 export const QUERIES = Object.freeze({
   ALL_BREWERIES: gql`
-    query AllBreweries($page: Int!, $perPage: Int!) {
-      listBreweries(page: $page, perPage: $perPage) {
+    query AllBreweries($page: Int!, $perPage: Int!, $filters: BreweryListFilters) {
+      listBreweries(page: $page, perPage: $perPage, filters: $filters) {
         page
         perPage
         hasNextPage

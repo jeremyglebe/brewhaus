@@ -15,6 +15,9 @@
         </div>
       </div>
 
+      <!-- Compact filter panel above the list. -->
+      <BreweryFilters @apply="onFiltersApply" @clear="onFiltersClear" />
+
       <!-- Initial loading state for the first page only. -->
       <div v-if="initialLoading" class="alert alert-info shadow-sm">
         <span>Loading breweries...</span>
@@ -53,10 +56,11 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref, useTemplateRef } from 'vue';
+import { onBeforeUnmount, onMounted, ref, useTemplateRef, watch } from 'vue';
 import BreweryListItem from '@/components/BreweryListItem.vue';
+import BreweryFilters from '@/components/BreweryFilters.vue';
 import DetailModal from '../modals/DetailModal.vue';
-import type { gqlBrewery } from '@brewhaus/shared/types/graphql';
+import type { gqlBrewery, gqlBreweryListFilters } from '@brewhaus/shared/types/graphql';
 import fetchAllBreweries from '@/services/brewery/fetchAll';
 
 // Configuration
@@ -66,6 +70,9 @@ const PER_PAGE = 12;
 const breweries = ref<gqlBrewery[]>([]);
 const page = ref(1);
 const hasNextPage = ref(true);
+
+// Active filters — null means no filters are applied (default unfiltered list).
+const activeFilters = ref<gqlBreweryListFilters | null>(null);
 
 // Reactive loading state
 const initialLoading = ref(true);
@@ -94,9 +101,8 @@ async function loadFirstPage(): Promise<void> {
     const result = await fetchAllBreweries({
       page: 1,
       perPage: PER_PAGE,
+      filters: activeFilters.value,
     });
-
-    console.log('First page result:', result);
 
     // Update the data state
     breweries.value = result.items;
@@ -135,6 +141,7 @@ async function loadNextPage(): Promise<void> {
     const result = await fetchAllBreweries({
       page: nextPage,
       perPage: PER_PAGE,
+      filters: activeFilters.value,
     });
 
     // Update the data state by appending the new items and updating the page
@@ -153,49 +160,57 @@ async function loadNextPage(): Promise<void> {
   }
 }
 
-/**
- * Wire the Observer's behavior to the end of page sentinel element.
- */
-function setupObserver(): void {
-  // The sentinel element is not present for some reason.
-  // This should not happen, but we defensively check to avoid runtime errors.
-  if (!sentinelElement.value) {
-    return;
-  }
+// The sentinel lives inside v-else, so it unmounts while initialLoading is true and
+// gets a new DOM node when loading finishes
+// watching the ref reconnects the observer to the new element automatically each time.
+watch(sentinelElement, (el) => {
+  // Disconnect any existing observer before potentially creating a new one.
+  observer?.disconnect();
 
-  // Create an observer to execute when the sentinel enters view
+  if (!el) return;
+
   // IntersectionObserver specifically watches for changes in the intersection of the
   // targeted element and an ancestor (or the viewport by default).
   // The root would be specified in the constructor, while the target element is observed via the observe() method.
   // (There can be multiple targets for a single observer, but each observer will share the same root and options.)
   // In this case we want to check against the viewport, so we don't specify a root.
-  observer = new IntersectionObserver(
-    (entries: IntersectionObserverEntry[]) => {
-      // Get the first entry which has changed intersection status
-      // There should only be one since the app only observes one element. There could be multiple
-      // if the app was watching multiple sentinel elements, which is why the callback provides an array.
-      const entry = entries[0];
+  observer = new IntersectionObserver((entries: IntersectionObserverEntry[]) => {
+    // Get the first entry which has changed intersection status.
+    // There should only be one since the app only observes one element. There could be multiple
+    // if the app was watching multiple sentinel elements, which is why the callback provides an array.
+    const entry = entries[0];
 
-      // Check if the entry is currently intersecting the viewport (this method will trigger every time the
-      // intersection status changes, but the app should only load more when it is IN FRAME, not when it leaves)
-      if (entry?.isIntersecting) {
-        void loadNextPage();
-      }
-    });
+    // Check if the entry is currently intersecting the viewport (this method will trigger every time the
+    // intersection status changes, but the app should only load more when it is IN FRAME, not when it leaves)
+    if (entry?.isIntersecting) {
+      void loadNextPage();
+    }
+  });
 
   // Start watching the end of page sentinel
-  observer.observe(sentinelElement.value);
-}
+  observer.observe(el);
+});
 
 function onListItemSelected(breweryId: string): void {
   modal.value?.open(breweryId);
+}
+
+// Applying filters resets the list to page 1 with the new filter set active.
+function onFiltersApply(filters: gqlBreweryListFilters): void {
+  activeFilters.value = filters;
+  void loadFirstPage();
+}
+
+// Clearing filters resets to the default unfiltered list.
+function onFiltersClear(): void {
+  activeFilters.value = null;
+  void loadFirstPage();
 }
 
 // lifecyle hook that runs when the user enters the page
 // handles the initial loading and setup
 onMounted(async () => {
   await loadFirstPage();
-  setupObserver();
 });
 
 // lifecycle hook that runs when the user leaves the page
