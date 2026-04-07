@@ -23,57 +23,13 @@
       </div>
 
       <div v-else class="space-y-4">
-        <div class="card bg-base-100 shadow-sm">
-          <div class="card-body p-4">
-            <div class="flex items-center justify-between text-sm text-base-content/70">
-              <span>Page {{ currentPage }} of {{ totalPages }}</span>
-              <span>{{ totalCount }} result{{ totalCount === 1 ? '' : 's' }}</span>
-            </div>
-
-            <div class="mt-3 flex justify-center">
-              <div class="join">
-                <button
-                  type="button"
-                  class="join-item btn btn-sm"
-                  :class="{ 'btn-disabled': currentPage <= 1 }"
-                  :disabled="currentPage <= 1 || pageLoading"
-                  @click="goToPage(currentPage - 1)"
-                >
-                  Prev
-                </button>
-
-                <button
-                  v-for="item in paginationItems"
-                  :key="`top-${item.key}`"
-                  type="button"
-                  class="join-item btn btn-sm"
-                  :class="{
-                    'btn-active': item.type === 'page' && item.value === currentPage,
-                    'text-base font-semibold': item.type === 'page' && item.value === currentPage,
-                  }"
-                  :disabled="pageLoading || item.type === 'ellipsis'"
-                  @click="item.type === 'page' ? goToPage(item.value) : undefined"
-                >
-                  {{ item.label }}
-                </button>
-
-                <button
-                  type="button"
-                  class="join-item btn btn-sm"
-                  :class="{ 'btn-disabled': currentPage >= totalPages }"
-                  :disabled="currentPage >= totalPages || pageLoading"
-                  @click="goToPage(currentPage + 1)"
-                >
-                  Next
-                </button>
-              </div>
-            </div>
-
-            <div v-if="pageLoading" class="mt-3 flex justify-center">
-              <span class="loading loading-infinity loading-md"></span>
-            </div>
-          </div>
-        </div>
+        <PaginationControls
+          :current-page="currentPage"
+          :total-pages="totalPages"
+          :total-count="totalCount"
+          :loading="pageLoading"
+          @navigate="onNavigate"
+        />
 
         <BreweryListItem
           v-for="brewery in breweries"
@@ -82,57 +38,13 @@
           @select="onListItemSelected"
         />
 
-        <div class="card bg-base-100 shadow-sm">
-          <div class="card-body p-4">
-            <div class="flex items-center justify-between text-sm text-base-content/70">
-              <span>Page {{ currentPage }} of {{ totalPages }}</span>
-              <span>{{ totalCount }} result{{ totalCount === 1 ? '' : 's' }}</span>
-            </div>
-
-            <div class="mt-3 flex justify-center">
-              <div class="join">
-                <button
-                  type="button"
-                  class="join-item btn btn-sm"
-                  :class="{ 'btn-disabled': currentPage <= 1 }"
-                  :disabled="currentPage <= 1 || pageLoading"
-                  @click="goToPage(currentPage - 1)"
-                >
-                  Prev
-                </button>
-
-                <button
-                  v-for="item in paginationItems"
-                  :key="item.key"
-                  type="button"
-                  class="join-item btn btn-sm"
-                  :class="{
-                    'btn-active': item.type === 'page' && item.value === currentPage,
-                    'text-base font-semibold': item.type === 'page' && item.value === currentPage,
-                  }"
-                  :disabled="pageLoading || item.type === 'ellipsis'"
-                  @click="item.type === 'page' ? goToPage(item.value) : undefined"
-                >
-                  {{ item.label }}
-                </button>
-
-                <button
-                  type="button"
-                  class="join-item btn btn-sm"
-                  :class="{ 'btn-disabled': currentPage >= totalPages }"
-                  :disabled="currentPage >= totalPages || pageLoading"
-                  @click="goToPage(currentPage + 1)"
-                >
-                  Next
-                </button>
-              </div>
-            </div>
-
-            <div v-if="pageLoading" class="mt-3 flex justify-center">
-              <span class="loading loading-infinity loading-md"></span>
-            </div>
-          </div>
-        </div>
+        <PaginationControls
+          :current-page="currentPage"
+          :total-pages="totalPages"
+          :total-count="totalCount"
+          :loading="pageLoading"
+          @navigate="onNavigate"
+        />
 
         <div v-if="breweries.length === 0" class="alert shadow-sm">
           <span>No breweries found for the selected filters.</span>
@@ -158,21 +70,18 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, useTemplateRef } from 'vue';
+import { ref, useTemplateRef } from 'vue';
 import { RouterLink } from 'vue-router';
 import BreweryListItem from '@/components/BreweryListItem.vue';
 import BreweryFilters from '@/components/BreweryFilters.vue';
 import BreweryDetails from '@/components/BreweryDetails.vue';
 import GenericModal from '@/components/ui/GenericModal.vue';
+import PaginationControls from '@/components/ui/PaginationControls.vue';
 import type { Brewery, BreweryListFilters } from '@/types/graphql';
 import fetchAllBreweries from '@/services/brewery/fetchAll';
 import fetchBreweriesMeta from '@/services/brewery/fetchMeta';
 
 const PER_PAGE = 12;
-
-type PaginationItem =
-  | { type: 'page'; value: number; label: string; key: string }
-  | { type: 'ellipsis'; label: string; key: string };
 
 const breweries = ref<Brewery[]>([]);
 const currentPage = ref(1);
@@ -185,53 +94,6 @@ const pageLoading = ref(false);
 const errorMessage = ref<string | null>(null);
 
 const modal = useTemplateRef('modalRef');
-
-const paginationItems = computed<PaginationItem[]>(() => {
-  const total = totalPages.value;
-  const current = currentPage.value;
-
-  if (total <= 5) {
-    return Array.from({ length: total }, (_, i) => {
-      const pageNumber = i + 1;
-      return {
-        type: 'page' as const,
-        value: pageNumber,
-        label: String(pageNumber),
-        key: `page-${pageNumber}`,
-      };
-    });
-  }
-
-  if (current <= 2) {
-    return [
-      { type: 'page', value: 1, label: '1', key: 'page-1' },
-      { type: 'page', value: 2, label: '2', key: 'page-2' },
-      { type: 'page', value: 3, label: '3', key: 'page-3' },
-      { type: 'ellipsis', label: '...', key: 'ellipsis-right' },
-      { type: 'page', value: total, label: String(total), key: `page-${total}` },
-    ];
-  }
-
-  if (current >= total - 1) {
-    return [
-      { type: 'page', value: 1, label: '1', key: 'page-1' },
-      { type: 'ellipsis', label: '...', key: 'ellipsis-left' },
-      { type: 'page', value: total - 2, label: String(total - 2), key: `page-${total - 2}` },
-      { type: 'page', value: total - 1, label: String(total - 1), key: `page-${total - 1}` },
-      { type: 'page', value: total, label: String(total), key: `page-${total}` },
-    ];
-  }
-
-  return [
-    { type: 'page', value: 1, label: '1', key: 'page-1' },
-    { type: 'ellipsis', label: '...', key: 'ellipsis-left' },
-    { type: 'page', value: current - 1, label: String(current - 1), key: `page-${current - 1}` },
-    { type: 'page', value: current, label: String(current), key: `page-${current}` },
-    { type: 'page', value: current + 1, label: String(current + 1), key: `page-${current + 1}` },
-    { type: 'ellipsis', label: '...', key: 'ellipsis-right' },
-    { type: 'page', value: total, label: String(total), key: `page-${total}` },
-  ];
-});
 
 async function refreshMetaAndPage(page: number): Promise<void> {
   pageLoading.value = true;
@@ -274,6 +136,10 @@ async function goToPage(page: number): Promise<void> {
   }
 
   await refreshMetaAndPage(page);
+}
+
+function onNavigate(page: number): void {
+  void goToPage(page);
 }
 
 function onListItemSelected(breweryId: string): void {

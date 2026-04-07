@@ -4,12 +4,18 @@
     class="card w-full overflow-hidden bg-base-100 text-left shadow-sm transition hover:shadow-md"
     @click="$emit('select', brewery.id)"
   >
-    <figure class="bg-base-200">
+    <figure class="relative bg-base-200">
+      <div v-if="imageLoading" class="absolute inset-0 p-3">
+        <div class="skeleton h-full w-full rounded-box"></div>
+      </div>
+
       <img
         :src="brewery.imageUrl"
         :alt="`${brewery.name} photo`"
         class="aspect-4/3 w-full object-cover"
         loading="lazy"
+        @load="imageLoading = false"
+        @error="imageLoading = false"
       >
     </figure>
 
@@ -30,8 +36,10 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import type { Brewery } from '@/types/graphql';
 
+const imageLoading = ref(true)
 
 // properties that can be passed to this component in the parent template
 defineProps<{

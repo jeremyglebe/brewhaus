@@ -23,13 +23,16 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
+// Lightweight payload channel passed from open(data) to slot content.
 type ModalPayload = Record<string, unknown> | null;
 
+// Public imperative API for opening/closing the native dialog.
 export type GenericModalRef = {
   open: (data?: ModalPayload) => void;
   close: () => void;
 };
 
+// title/boxClass let callers keep a shared shell while adjusting context and size.
 withDefaults(
   defineProps<{
     title?: string;
@@ -45,9 +48,13 @@ const emit = defineEmits<{
   (e: 'close'): void;
 }>();
 
+// Underlying native dialog element.
 const dialogRef = ref<HTMLDialogElement | null>(null);
+
+// Payload is forwarded to slot content via #default="{ data }".
 const payload = ref<ModalPayload>(null);
 
+// Opens the modal and stores caller-provided payload for the slot.
 function open(data: ModalPayload = null): void {
   payload.value = data;
 
@@ -56,17 +63,20 @@ function open(data: ModalPayload = null): void {
   }
 }
 
+// Programmatic close for parent flows.
 function close(): void {
   if (dialogRef.value?.open) {
     dialogRef.value.close();
   }
 }
 
+// Reset payload after close so stale data does not leak across opens.
 function onClose(): void {
   payload.value = null;
   emit('close');
 }
 
+// Exposes imperative API to refs in parent pages.
 defineExpose<GenericModalRef>({
   open,
   close,

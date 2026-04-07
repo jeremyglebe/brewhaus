@@ -13,12 +13,18 @@
   </div>
 
   <div v-else-if="brewery" class="space-y-4">
-    <figure class="overflow-hidden rounded-box bg-base-200">
+    <figure class="relative overflow-hidden rounded-box bg-base-200">
+      <div v-if="imageLoading" class="absolute inset-0 p-3">
+        <div class="skeleton h-full w-full rounded-box"></div>
+      </div>
+
       <img
         :src="brewery.imageUrl"
         :alt="`${brewery.name} photo`"
         class="aspect-4/3 w-full object-cover"
         loading="lazy"
+        @load="imageLoading = false"
+        @error="imageLoading = false"
       >
     </figure>
 
@@ -75,6 +81,7 @@ const props = defineProps<{
 
 const brewery = ref<Brewery | null>(null)
 const loading = ref(true)
+const imageLoading = ref(true)
 const errorMessage = ref<string | null>(null)
 const { isFavorite, toggleFavorite } = useFavorites()
 const toast = useToast()
@@ -101,6 +108,7 @@ const favoriteButtonClass = computed(() => {
 
 async function loadBrewery(): Promise<void> {
   loading.value = true
+  imageLoading.value = true
   errorMessage.value = null
 
   try {
