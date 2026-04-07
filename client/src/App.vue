@@ -6,7 +6,8 @@
       <header class="navbar sticky top-0 z-30 bg-base-100 shadow-sm">
         <div class="flex-1">
           <RouterLink to="/" class="btn btn-ghost text-xl">
-            Brewhaus
+            <img :src="beerMugSvg" alt="Beer mug" class="beer-mug-mark" />
+            <span>Brewhaus</span>
           </RouterLink>
         </div>
 
@@ -66,7 +67,8 @@
 
         <div class="flex-1 overflow-y-auto p-4">
           <div v-if="favorites.length === 0" class="alert shadow-sm">
-            <span>Favorite a brewery from any detail view and it will show up here.</span>
+            <img :src="beerMugSvg" alt="Beer mug" class="empty-mug-icon" />
+            <span>Your mug is empty. Favorite a brewery from any detail view and it will show up here.</span>
           </div>
 
           <ul v-else class="menu w-full gap-2 rounded-box bg-base-100 p-0">
@@ -91,6 +93,7 @@ import { useFavorites } from '@/composables/useFavorites';
 import ToastManager from '@/components/ui/ToastManager.vue';
 import type { FavoriteBrewery } from '@/services/favorites';
 import { setToastManager } from '@/composables/useToast';
+import beerMugSvg from '@/assets/beer-mug.svg';
 
 const route = useRoute();
 const drawerOpen = ref(false);
@@ -116,3 +119,28 @@ watch(toastManagerRef, (manager) => {
   setToastManager(manager ?? null);
 }, { immediate: true });
 </script>
+
+<style scoped>
+.beer-mug-mark {
+  height: 1.25rem;
+  width: 1.25rem;
+  animation: mug-bob 2.4s ease-in-out infinite;
+}
+
+.empty-mug-icon {
+  height: 1.5rem;
+  width: 1.5rem;
+  opacity: 0.85;
+}
+
+@keyframes mug-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-1.5px);
+  }
+}
+</style>
