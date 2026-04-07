@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Brewhaus</string>
+    <string name="title_activity_main">Brewhaus</string>
+    <string name="package_name">com.jeremyglebe.brewhaus</string>
+    <string name="custom_url_scheme">com.jeremyglebe.brewhaus</string>
+</resources>

@@ -59,3 +59,11 @@ In both the client and the server directories, execute this command:
 ### Mobile Packaging
 
 - Capacitor
+- Setup and workflow docs: [client/README.md](client/README.md#capacitor-integration)
+
+### Geolocation Permissions
+
+Capacitor geolocation requires native platform permissions:
+
+- iOS privacy strings are configured in [client/ios/App/App/Info.plist](client/ios/App/App/Info.plist)
+- Android location permissions are configured in [client/android/app/src/main/AndroidManifest.xml](client/android/app/src/main/AndroidManifest.xml)

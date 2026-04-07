@@ -41,6 +41,27 @@ npm run build
 
 Runs type-checking and creates a production build.
 
+## Capacitor Integration
+
+This client includes Capacitor so it can be packaged as native iOS and Android apps.
+
+### Client setup
+
+```sh
+npm install
+npm run build
+npx cap sync
+```
+
+### Open platform projects
+
+```sh
+npx cap open android
+npx cap open ios
+```
+
+Tip: after client code changes, run `npm run build` and `npx cap sync` again before reopening or rebuilding native projects.
+
 ## Lint
 
 ```sh
