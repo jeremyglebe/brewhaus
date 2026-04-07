@@ -32,7 +32,8 @@ In both the client and the server directories, execute this command:
 - ✅ Random Images for each Brewery
   - Images are being used as placeholders; the images are not actually of the business or even brewery-related
   - Imagine the hypothetical company's API supported photos of the business, this demonstrates how it may be displayed
-- 🔎 Lat/Lon Maps Display
+- ✅ Lat/Lon Maps Display
+  - Implemented via Google Maps iFrame (rather than api integration); minimal map features for demonstration only
 - 🔎 Capacitor Integration
 
 ## Stack

@@ -61,6 +61,12 @@
         Visit website
       </a>
     </div>
+
+    <BreweryMapEmbed
+      v-if="props.showMap"
+      :latitude="brewery.latitude"
+      :longitude="brewery.longitude"
+    />
   </div>
 </template>
 
@@ -73,11 +79,15 @@ import { useFavorites } from '@/composables/useFavorites';
 import { useToast } from '@/composables/useToast';
 import { createFavoriteBrewerySummary } from '@/services/favorites';
 import type { Brewery } from '@/types/graphql';
+import BreweryMapEmbed from '@/components/BreweryMapEmbed.vue';
 import { onMounted, ref, watch } from 'vue'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   breweryId: string
-}>()
+  showMap?: boolean
+}>(), {
+  showMap: false,
+})
 
 const brewery = ref<Brewery | null>(null)
 const loading = ref(true)

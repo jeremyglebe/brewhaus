@@ -12,7 +12,7 @@
 
       <div class="card bg-base-100 shadow-sm">
         <div class="card-body">
-          <BreweryDetails v-if="breweryId" :brewery-id="breweryId" />
+          <BreweryDetails v-if="breweryId" :brewery-id="breweryId" :show-map="true" />
           <div v-else class="alert alert-error">
             <span>Missing brewery id.</span>
           </div>
