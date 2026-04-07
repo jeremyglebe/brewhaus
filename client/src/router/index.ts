@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import ListPage from '@/views/pages/ListPage.vue'
-import BreweryListView from '@/views/BreweryListView.vue'
 import SearchPage from '@/views/pages/SearchPage.vue'
 import SettingsPage from '@/views/pages/SettingsPage.vue'
 import DetailPage from '@/views/pages/DetailPage.vue'
@@ -27,11 +26,6 @@ const router = createRouter({
       path: '/brewery/:id',
       name: 'brewery-detail',
       component: DetailPage,
-    },
-    {
-      path: '/poc',
-      name: 'poc',
-      component: BreweryListView,
     },
   ],
 })
