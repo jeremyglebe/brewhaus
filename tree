@@ -9,8 +9,17 @@
  ┃ ┃ ┣ 📂assets
  ┃ ┃ ┃ ┗ 📜main.css
  ┃ ┃ ┣ 📂components
+ ┃ ┃ ┃ ┣ 📂ui
+ ┃ ┃ ┃ ┃ ┣ 📜GenericModal.vue
+ ┃ ┃ ┃ ┃ ┣ 📜PaginationControls.vue
+ ┃ ┃ ┃ ┃ ┣ 📜README.md
+ ┃ ┃ ┃ ┃ ┗ 📜ToastManager.vue
  ┃ ┃ ┃ ┣ 📜BreweryDetails.vue
+ ┃ ┃ ┃ ┣ 📜BreweryFilters.vue
  ┃ ┃ ┃ ┗ 📜BreweryListItem.vue
+ ┃ ┃ ┣ 📂composables
+ ┃ ┃ ┃ ┣ 📜useFavorites.ts
+ ┃ ┃ ┃ ┗ 📜useToast.ts
  ┃ ┃ ┣ 📂graphql
  ┃ ┃ ┃ ┗ 📜queries.ts
  ┃ ┃ ┣ 📂lib
@@ -18,20 +27,30 @@
  ┃ ┃ ┣ 📂router
  ┃ ┃ ┃ ┗ 📜index.ts
  ┃ ┃ ┣ 📂services
- ┃ ┃ ┃ ┗ 📂brewery
+ ┃ ┃ ┃ ┣ 📂brewery
  ┃ ┃ ┃ ┃ ┣ 📜fetchAll.ts
  ┃ ┃ ┃ ┃ ┣ 📜fetchById.ts
  ┃ ┃ ┃ ┃ ┣ 📜fetchBySearch.ts
+ ┃ ┃ ┃ ┃ ┣ 📜fetchMeta.ts
  ┃ ┃ ┃ ┃ ┗ 📜index.ts
+ ┃ ┃ ┃ ┣ 📂favorites
+ ┃ ┃ ┃ ┃ ┗ 📜index.ts
+ ┃ ┃ ┃ ┣ 📂preferences
+ ┃ ┃ ┃ ┃ ┣ 📜index.ts
+ ┃ ┃ ┃ ┃ ┗ 📜listMode.ts
+ ┃ ┃ ┃ ┗ 📂storage
+ ┃ ┃ ┃ ┃ ┣ 📜keys.ts
+ ┃ ┃ ┃ ┃ ┗ 📜localStorage.ts
+ ┃ ┃ ┣ 📂types
+ ┃ ┃ ┃ ┗ 📜graphql.ts
  ┃ ┃ ┣ 📂views
- ┃ ┃ ┃ ┣ 📂modals
- ┃ ┃ ┃ ┃ ┗ 📜DetailModal.vue
- ┃ ┃ ┃ ┣ 📂pages
+ ┃ ┃ ┃ ┗ 📂pages
  ┃ ┃ ┃ ┃ ┣ 📜DetailPage.vue
  ┃ ┃ ┃ ┃ ┣ 📜ListPage.vue
+ ┃ ┃ ┃ ┃ ┣ 📜ListPageInfinite.vue
+ ┃ ┃ ┃ ┃ ┣ 📜ListPagePaginated.vue
  ┃ ┃ ┃ ┃ ┣ 📜SearchPage.vue
  ┃ ┃ ┃ ┃ ┗ 📜SettingsPage.vue
- ┃ ┃ ┃ ┗ 📜BreweryListView.vue
  ┃ ┃ ┣ 📜App.vue
  ┃ ┃ ┗ 📜main.ts
  ┃ ┣ 📜.editorconfig
@@ -55,6 +74,7 @@
  ┃ ┃ ┃ ┣ 📜fromId.ts
  ┃ ┃ ┃ ┣ 📜index.ts
  ┃ ┃ ┃ ┣ 📜list.ts
+ ┃ ┃ ┃ ┣ 📜listMeta.ts
  ┃ ┃ ┃ ┣ 📜map.ts
  ┃ ┃ ┃ ┗ 📜search.ts
  ┃ ┃ ┣ 📂schema
@@ -71,11 +91,29 @@
  ┃ ┣ 📜package.json
  ┃ ┗ 📜tsconfig.json
  ┣ 📂shared
+ ┃ ┣ 📂schema
+ ┃ ┃ ┗ 📜schema.graphql
  ┃ ┣ 📂types
+ ┃ ┃ ┣ 📂api
+ ┃ ┃ ┃ ┣ 📜index.ts
+ ┃ ┃ ┃ ┗ 📜openBrewery.ts
+ ┃ ┃ ┣ 📂common
+ ┃ ┃ ┃ ┣ 📜enums.ts
+ ┃ ┃ ┃ ┗ 📜index.ts
+ ┃ ┃ ┣ 📂graphql
+ ┃ ┃ ┃ ┣ 📂generated
+ ┃ ┃ ┃ ┃ ┣ 📜operations.ts
+ ┃ ┃ ┃ ┃ ┗ 📜schema.ts
+ ┃ ┃ ┃ ┗ 📜index.ts
+ ┃ ┃ ┣ 📜api.ts
+ ┃ ┃ ┣ 📜common.ts
  ┃ ┃ ┣ 📜enums.ts
  ┃ ┃ ┗ 📜graphql.ts
  ┃ ┣ 📜.gitignore
+ ┃ ┣ 📜codegen.yml
+ ┃ ┣ 📜package-lock.json
  ┃ ┣ 📜package.json
  ┃ ┗ 📜tsconfig.json
  ┣ 📜package-lock.json
- ┗ 📜README.md
+ ┣ 📜README.md
+ ┗ 📜tree
