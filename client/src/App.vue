@@ -54,6 +54,6 @@ import { RouterLink, RouterView, useRoute } from 'vue-router';
 
 const route = useRoute();
 const isHomeActive = computed(() => {
-  return route.path === '/' || route.path === '/list-infinite' || route.path === '/list-paginated';
+  return route.path === '/' || route.path.startsWith('/list');
 });
 </script>

@@ -26,5 +26,5 @@ export function setListModePreference(mode: BreweryListMode): void {
 }
 
 export function resolveListModeRoute(mode: BreweryListMode): string {
-  return mode === 'pagination' ? '/list-paginated' : '/list-infinite';
+  return mode === 'pagination' ? '/list/paginated' : '/list/infinite';
 }
