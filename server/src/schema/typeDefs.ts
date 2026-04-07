@@ -25,6 +25,13 @@ type BreweryListResult {
   hasNextPage: Boolean!
 }
 
+type BreweryListMetaResult {
+  total: Int!
+  page: Int!
+  perPage: Int!
+  totalPages: Int!
+}
+
 input BreweryListFilters {
   byCity: String
   byCountry: String
@@ -39,6 +46,12 @@ type Query {
     perPage: Int = 12
     filters: BreweryListFilters
   ): BreweryListResult!
+
+  listBreweriesMeta(
+    page: Int = 1
+    perPage: Int = 12
+    filters: BreweryListFilters
+  ): BreweryListMetaResult!
 
   searchBreweries(
     query: String!

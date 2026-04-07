@@ -1,7 +1,8 @@
 <template>
-  <div class="card bg-base-100 shadow-sm mb-4">
-    <div class="card-body p-4">
-      <h2 class="card-title text-base mb-2">Filter Breweries</h2>
+  <div class="collapse collapse-arrow bg-base-100 shadow-sm mb-4">
+    <input type="checkbox" />
+    <div class="collapse-title text-base font-semibold">Filter Breweries</div>
+    <div class="collapse-content pt-0">
 
       <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
         <!-- Brewery Type -->

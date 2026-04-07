@@ -29,6 +29,13 @@ export interface gqlBreweryListResult {
     hasNextPage: boolean;
 }
 
+export interface gqlBreweryListMetaResult {
+    total: number;
+    page: number;
+    perPage: number;
+    totalPages: number;
+}
+
 export interface gqlBreweryListFilters {
     byCity?: string | null;
     byCountry?: string | null;
@@ -46,6 +53,14 @@ export interface gqlQuery {
             filters?: gqlBreweryListFilters;
         },
     ) => Promise<gqlBreweryListResult>;
+    listBreweriesMeta: (
+        _parent: unknown,
+        args: {
+            page?: number;
+            perPage?: number;
+            filters?: gqlBreweryListFilters;
+        },
+    ) => Promise<gqlBreweryListMetaResult>;
     searchBreweries: (
         _parent: unknown,
         args: { query: string; page?: number; perPage?: number },

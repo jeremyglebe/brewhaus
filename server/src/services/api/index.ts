@@ -1,6 +1,11 @@
 import API_CONSTANTS from './constants';
 import { ApiError } from './error';
-import { ApiBrewery, ApiQueryFilters, ApiQuerySearch } from './types';
+import {
+    ApiBrewery,
+    ApiBreweryMetaResponse,
+    ApiQueryFilters,
+    ApiQuerySearch,
+} from './types';
 
 // typed wrapper for fetch
 async function fetchJson<T>(url: string): Promise<T> {
@@ -52,6 +57,31 @@ export async function listBreweries(filters?: ApiQueryFilters): Promise<ApiBrewe
     }
 
     return fetchJson<ApiBrewery[]>(url.toString());
+}
+
+/**
+ * Endpoint: /v1/breweries/meta
+ *
+ * https://www.openbrewerydb.org/documentation#metadata
+ * @returns metadata for brewery list filters, including total count.
+ */
+export async function listBreweriesMeta(filters?: ApiQueryFilters): Promise<ApiBreweryMetaResponse> {
+    const url = new URL(`${API_CONSTANTS.base_url}/meta`);
+
+    if (filters) {
+        if (filters.by_city) url.searchParams.set('by_city', filters.by_city);
+        if (filters.by_country) url.searchParams.set('by_country', filters.by_country);
+        if (filters.by_dist) url.searchParams.set('by_dist', filters.by_dist);
+        if (filters.by_ids) url.searchParams.set('by_ids', filters.by_ids);
+        if (filters.by_name) url.searchParams.set('by_name', filters.by_name);
+        if (filters.by_state) url.searchParams.set('by_state', filters.by_state);
+        if (filters.by_postal) url.searchParams.set('by_postal', filters.by_postal);
+        if (filters.by_type) url.searchParams.set('by_type', filters.by_type);
+        if (filters.page) url.searchParams.set('page', String(filters.page));
+        if (filters.per_page) url.searchParams.set('per_page', String(filters.per_page));
+    }
+
+    return fetchJson<ApiBreweryMetaResponse>(url.toString());
 }
 
 /**

@@ -51,3 +51,11 @@ export type ApiQuerySearch = {
     // Page number for pagination. Default: 1.
     page?: number;
 };
+
+export type ApiBreweryMetaResponse = {
+    total: number;
+    page?: number;
+    per_page?: number;
+    by_state?: Record<string, number>;
+    by_type?: Record<string, number>;
+};

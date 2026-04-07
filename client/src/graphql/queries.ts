@@ -26,6 +26,16 @@ export const QUERIES = Object.freeze({
       }
     }
   `,
+  ALL_BREWERIES_META: gql`
+    query AllBreweriesMeta($page: Int!, $perPage: Int!, $filters: BreweryListFilters) {
+      listBreweriesMeta(page: $page, perPage: $perPage, filters: $filters) {
+        total
+        page
+        perPage
+        totalPages
+      }
+    }
+  `,
   BREWERY_BY_ID: gql`
     query BreweryById($id: ID!) {
       brewery(id: $id) {

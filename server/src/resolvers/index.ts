@@ -2,12 +2,14 @@
 
 import { gqlResolvers } from '@brewhaus/shared/types/graphql';
 import gqlListBreweries from './list';
+import gqlListBreweriesMeta from './listMeta';
 import gqlSearchBreweries from './search';
 import gqlBreweryFromId from './fromId';
 
 export const resolvers: gqlResolvers = {
     Query: {
         listBreweries: gqlListBreweries,
+        listBreweriesMeta: gqlListBreweriesMeta,
         searchBreweries: gqlSearchBreweries,
         brewery: gqlBreweryFromId,
     },
