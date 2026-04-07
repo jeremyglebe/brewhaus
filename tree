@@ -1,0 +1,81 @@
+📦brewhaus
+ ┣ 📂client
+ ┃ ┣ 📂.vscode
+ ┃ ┃ ┣ 📜extensions.json
+ ┃ ┃ ┗ 📜settings.json
+ ┃ ┣ 📂public
+ ┃ ┃ ┗ 📜favicon.ico
+ ┃ ┣ 📂src
+ ┃ ┃ ┣ 📂assets
+ ┃ ┃ ┃ ┗ 📜main.css
+ ┃ ┃ ┣ 📂components
+ ┃ ┃ ┃ ┣ 📜BreweryDetails.vue
+ ┃ ┃ ┃ ┗ 📜BreweryListItem.vue
+ ┃ ┃ ┣ 📂graphql
+ ┃ ┃ ┃ ┗ 📜queries.ts
+ ┃ ┃ ┣ 📂lib
+ ┃ ┃ ┃ ┗ 📜apollo.ts
+ ┃ ┃ ┣ 📂router
+ ┃ ┃ ┃ ┗ 📜index.ts
+ ┃ ┃ ┣ 📂services
+ ┃ ┃ ┃ ┗ 📂brewery
+ ┃ ┃ ┃ ┃ ┣ 📜fetchAll.ts
+ ┃ ┃ ┃ ┃ ┣ 📜fetchById.ts
+ ┃ ┃ ┃ ┃ ┣ 📜fetchBySearch.ts
+ ┃ ┃ ┃ ┃ ┗ 📜index.ts
+ ┃ ┃ ┣ 📂views
+ ┃ ┃ ┃ ┣ 📂modals
+ ┃ ┃ ┃ ┃ ┗ 📜DetailModal.vue
+ ┃ ┃ ┃ ┣ 📂pages
+ ┃ ┃ ┃ ┃ ┣ 📜DetailPage.vue
+ ┃ ┃ ┃ ┃ ┣ 📜ListPage.vue
+ ┃ ┃ ┃ ┃ ┣ 📜SearchPage.vue
+ ┃ ┃ ┃ ┃ ┗ 📜SettingsPage.vue
+ ┃ ┃ ┃ ┗ 📜BreweryListView.vue
+ ┃ ┃ ┣ 📜App.vue
+ ┃ ┃ ┗ 📜main.ts
+ ┃ ┣ 📜.editorconfig
+ ┃ ┣ 📜.gitattributes
+ ┃ ┣ 📜.gitignore
+ ┃ ┣ 📜.oxlintrc.json
+ ┃ ┣ 📜.prettierrc.json
+ ┃ ┣ 📜env.d.ts
+ ┃ ┣ 📜eslint.config.ts
+ ┃ ┣ 📜index.html
+ ┃ ┣ 📜package-lock.json
+ ┃ ┣ 📜package.json
+ ┃ ┣ 📜README.md
+ ┃ ┣ 📜tsconfig.app.json
+ ┃ ┣ 📜tsconfig.json
+ ┃ ┣ 📜tsconfig.node.json
+ ┃ ┗ 📜vite.config.ts
+ ┣ 📂server
+ ┃ ┣ 📂src
+ ┃ ┃ ┣ 📂resolvers
+ ┃ ┃ ┃ ┣ 📜fromId.ts
+ ┃ ┃ ┃ ┣ 📜index.ts
+ ┃ ┃ ┃ ┣ 📜list.ts
+ ┃ ┃ ┃ ┣ 📜map.ts
+ ┃ ┃ ┃ ┗ 📜search.ts
+ ┃ ┃ ┣ 📂schema
+ ┃ ┃ ┃ ┗ 📜typeDefs.ts
+ ┃ ┃ ┣ 📂services
+ ┃ ┃ ┃ ┗ 📂api
+ ┃ ┃ ┃ ┃ ┣ 📜constants.ts
+ ┃ ┃ ┃ ┃ ┣ 📜error.ts
+ ┃ ┃ ┃ ┃ ┣ 📜index.ts
+ ┃ ┃ ┃ ┃ ┗ 📜types.ts
+ ┃ ┃ ┗ 📜index.ts
+ ┃ ┣ 📜.gitignore
+ ┃ ┣ 📜package-lock.json
+ ┃ ┣ 📜package.json
+ ┃ ┗ 📜tsconfig.json
+ ┣ 📂shared
+ ┃ ┣ 📂types
+ ┃ ┃ ┣ 📜enums.ts
+ ┃ ┃ ┗ 📜graphql.ts
+ ┃ ┣ 📜.gitignore
+ ┃ ┣ 📜package.json
+ ┃ ┗ 📜tsconfig.json
+ ┣ 📜package-lock.json
+ ┗ 📜README.md
