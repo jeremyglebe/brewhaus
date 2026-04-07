@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import ListEntryPage from '@/views/pages/ListEntryPage.vue';
 import ListPage from '@/views/pages/ListPage.vue';
 import ListPagePaginated from '@/views/pages/ListPagePaginated.vue';
 import SearchPage from '@/views/pages/SearchPage.vue';
@@ -10,7 +11,12 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'brewery-list',
+      name: 'brewery-list-entry',
+      component: ListEntryPage,
+    },
+    {
+      path: '/list-infinite',
+      name: 'brewery-list-infinite',
       component: ListPage,
     },
     {

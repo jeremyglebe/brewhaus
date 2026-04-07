@@ -27,7 +27,7 @@
 
     <!-- Bottom dock navigation -->
     <nav class="dock dock-sm">
-      <RouterLink to="/" class="dock-item" :class="{ 'dock-active': route.path === '/' }" aria-label="Home">
+      <RouterLink to="/" class="dock-item" :class="{ 'dock-active': isHomeActive }" aria-label="Home">
         <HomeIcon />
         <span class="dock-label">Home</span>
       </RouterLink>
@@ -48,8 +48,12 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import { Cog6ToothIcon, HomeIcon, MagnifyingGlassIcon } from '@heroicons/vue/16/solid';
 import { RouterLink, RouterView, useRoute } from 'vue-router';
 
 const route = useRoute();
+const isHomeActive = computed(() => {
+  return route.path === '/' || route.path === '/list-infinite' || route.path === '/list-paginated';
+});
 </script>
