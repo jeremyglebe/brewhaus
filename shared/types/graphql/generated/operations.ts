@@ -24,6 +24,7 @@ export type Brewery = {
   city?: Maybe<Scalars['String']['output']>;
   country?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
+  imageUrl: Scalars['String']['output'];
   latitude?: Maybe<Scalars['Float']['output']>;
   longitude?: Maybe<Scalars['Float']['output']>;
   name: Scalars['String']['output'];
@@ -100,7 +101,7 @@ export type AllBreweriesQueryVariables = Exact<{
 }>;
 
 
-export type AllBreweriesQuery = { __typename?: 'Query', listBreweries: { __typename?: 'BreweryListResult', page: number, perPage: number, hasNextPage: boolean, items: Array<{ __typename?: 'Brewery', id: string, name: string, breweryType?: BreweryType | null, address1?: string | null, address2?: string | null, address3?: string | null, city?: string | null, stateProvince?: string | null, postalCode?: string | null, country?: string | null, longitude?: number | null, latitude?: number | null, phone?: string | null, websiteUrl?: string | null }> } };
+export type AllBreweriesQuery = { __typename?: 'Query', listBreweries: { __typename?: 'BreweryListResult', page: number, perPage: number, hasNextPage: boolean, items: Array<{ __typename?: 'Brewery', id: string, name: string, imageUrl: string, breweryType?: BreweryType | null, address1?: string | null, address2?: string | null, address3?: string | null, city?: string | null, stateProvince?: string | null, postalCode?: string | null, country?: string | null, longitude?: number | null, latitude?: number | null, phone?: string | null, websiteUrl?: string | null }> } };
 
 export type AllBreweriesMetaQueryVariables = Exact<{
   page: Scalars['Int']['input'];
@@ -116,7 +117,7 @@ export type BreweryByIdQueryVariables = Exact<{
 }>;
 
 
-export type BreweryByIdQuery = { __typename?: 'Query', brewery: { __typename?: 'Brewery', id: string, name: string, breweryType?: BreweryType | null, address1?: string | null, address2?: string | null, address3?: string | null, city?: string | null, stateProvince?: string | null, postalCode?: string | null, country?: string | null, longitude?: number | null, latitude?: number | null, phone?: string | null, websiteUrl?: string | null } };
+export type BreweryByIdQuery = { __typename?: 'Query', brewery: { __typename?: 'Brewery', id: string, name: string, imageUrl: string, breweryType?: BreweryType | null, address1?: string | null, address2?: string | null, address3?: string | null, city?: string | null, stateProvince?: string | null, postalCode?: string | null, country?: string | null, longitude?: number | null, latitude?: number | null, phone?: string | null, websiteUrl?: string | null } };
 
 export type SearchBreweriesQueryVariables = Exact<{
   query: Scalars['String']['input'];
@@ -125,4 +126,4 @@ export type SearchBreweriesQueryVariables = Exact<{
 }>;
 
 
-export type SearchBreweriesQuery = { __typename?: 'Query', searchBreweries: { __typename?: 'BreweryListResult', page: number, perPage: number, hasNextPage: boolean, items: Array<{ __typename?: 'Brewery', id: string, name: string, breweryType?: BreweryType | null, address1?: string | null, address2?: string | null, address3?: string | null, city?: string | null, stateProvince?: string | null, postalCode?: string | null, country?: string | null, longitude?: number | null, latitude?: number | null, phone?: string | null, websiteUrl?: string | null }> } };
+export type SearchBreweriesQuery = { __typename?: 'Query', searchBreweries: { __typename?: 'BreweryListResult', page: number, perPage: number, hasNextPage: boolean, items: Array<{ __typename?: 'Brewery', id: string, name: string, imageUrl: string, breweryType?: BreweryType | null, address1?: string | null, address2?: string | null, address3?: string | null, city?: string | null, stateProvince?: string | null, postalCode?: string | null, country?: string | null, longitude?: number | null, latitude?: number | null, phone?: string | null, websiteUrl?: string | null }> } };

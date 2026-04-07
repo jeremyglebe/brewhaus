@@ -2,9 +2,12 @@
   <main class="min-h-screen bg-base-200">
     <section class="container mx-auto max-w-2xl p-4 space-y-4">
       <!-- Page header -->
-      <div class="navbar rounded-box bg-base-100 shadow-sm">
-        <div class="flex-1">
-          <h1 class="text-xl font-bold">Search Breweries</h1>
+      <div class="hero rounded-box bg-base-100 shadow-sm">
+        <div class="hero-content w-full justify-start">
+          <div>
+            <h1 class="text-2xl font-bold">Search Breweries</h1>
+            <p class="text-base-content/70">Find breweries by name.</p>
+          </div>
         </div>
       </div>
 
@@ -33,7 +36,7 @@
       </form>
 
       <!-- Initial guidance -->
-      <div v-if="!hasSearched && !loading && !errorMessage" class="alert bg-base-100 shadow-sm">
+      <div v-if="!hasSearched && !loading && !errorMessage" class="alert shadow-sm">
         <span>Enter a brewery name and search.</span>
       </div>
 
@@ -43,17 +46,28 @@
       </div>
 
       <!-- Empty state -->
-      <div v-else-if="hasSearched && !loading && breweries.length === 0" class="alert bg-base-100 shadow-sm">
+      <div v-else-if="hasSearched && !loading && breweries.length === 0" class="alert shadow-sm">
         <span>No breweries found.</span>
       </div>
 
       <!-- Results -->
       <div v-else-if="breweries.length > 0" class="space-y-4">
-        <div v-for="brewery in breweries" :key="brewery.id" class="card bg-base-100 shadow-sm">
-          <BreweryListItem :brewery="brewery" @select="onListItemSelected" />
-        </div>
+        <BreweryListItem v-for="brewery in breweries" :key="brewery.id" :brewery="brewery" @select="onListItemSelected" />
 
-        <DetailModal ref="modalRef" />
+        <GenericModal ref="modalRef" title="Brewery details" box-class="max-w-3xl">
+          <template #default="{ data }">
+            <div class="space-y-4">
+              <BreweryDetails v-if="data?.breweryId" :brewery-id="String(data.breweryId)" />
+              <RouterLink
+                v-if="data?.breweryId"
+                :to="`/brewery/${String(data.breweryId)}`"
+                class="btn btn-outline btn-sm"
+              >
+                Open full page
+              </RouterLink>
+            </div>
+          </template>
+        </GenericModal>
       </div>
     </section>
   </main>
@@ -61,8 +75,10 @@
 
 <script setup lang="ts">
 import { ref, useTemplateRef } from 'vue'
+import { RouterLink } from 'vue-router'
 import BreweryListItem from '@/components/BreweryListItem.vue'
-import DetailModal from '../modals/DetailModal.vue'
+import BreweryDetails from '@/components/BreweryDetails.vue'
+import GenericModal from '@/components/ui/GenericModal.vue'
 import type { Brewery } from '@/types/graphql'
 import fetchBreweriesBySearch from '@/services/brewery/fetchBySearch'
 
@@ -103,6 +119,6 @@ async function submitSearch(): Promise<void> {
 }
 
 function onListItemSelected(breweryId: string): void {
-  modal.value?.open(breweryId)
+  modal.value?.open({ breweryId })
 }
 </script>

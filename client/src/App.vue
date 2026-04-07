@@ -43,6 +43,8 @@
           <span class="dock-label">Settings</span>
         </RouterLink>
       </nav>
+
+      <ToastManager ref="toastManagerRef" />
     </div>
 
     <div class="drawer-side z-40">
@@ -63,8 +65,8 @@
         </div>
 
         <div class="flex-1 overflow-y-auto p-4">
-          <div v-if="favorites.length === 0" class="rounded-box border border-dashed border-base-300 bg-base-200/60 p-4 text-sm text-base-content/70">
-            Favorite a brewery from any detail view and it will show up here.
+          <div v-if="favorites.length === 0" class="alert shadow-sm">
+            <span>Favorite a brewery from any detail view and it will show up here.</span>
           </div>
 
           <ul v-else class="menu w-full gap-2 rounded-box bg-base-100 p-0">
@@ -82,15 +84,18 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed, ref, useTemplateRef, watch } from 'vue';
 import { Cog6ToothIcon, HeartIcon, HomeIcon, MagnifyingGlassIcon } from '@heroicons/vue/16/solid';
 import { RouterLink, RouterView, useRoute } from 'vue-router';
 import { useFavorites } from '@/composables/useFavorites';
+import ToastManager from '@/components/ui/ToastManager.vue';
 import type { FavoriteBrewery } from '@/services/favorites';
+import { setToastManager } from '@/composables/useToast';
 
 const route = useRoute();
 const drawerOpen = ref(false);
 const { favorites } = useFavorites();
+const toastManagerRef = useTemplateRef('toastManagerRef');
 
 const isHomeActive = computed(() => {
   return route.path === '/' || route.path.startsWith('/list');
@@ -107,4 +112,7 @@ function formatFavoriteLocation(favorite: FavoriteBrewery): string {
 }
 
 watch(() => route.fullPath, closeDrawer);
+watch(toastManagerRef, (manager) => {
+  setToastManager(manager ?? null);
+}, { immediate: true });
 </script>

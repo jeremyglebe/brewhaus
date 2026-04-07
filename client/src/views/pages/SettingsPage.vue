@@ -1,16 +1,17 @@
 <template>
-  <main class="container mx-auto max-w-2xl p-4">
-    <div class="hero mb-6 rounded-box bg-base-100 shadow-sm">
-      <div class="hero-content text-center">
+  <main class="min-h-screen bg-base-200">
+    <section class="container mx-auto max-w-2xl p-4 space-y-4">
+      <div class="hero rounded-box bg-base-100 shadow-sm">
+        <div class="hero-content text-center">
         <div>
           <h1 class="text-2xl font-bold">Settings</h1>
           <p class="text-base-content/70">Choose how the brewery list behaves on Home.</p>
         </div>
       </div>
-    </div>
+      </div>
 
-    <section class="card bg-base-100 shadow-sm">
-      <div class="card-body gap-4">
+      <section class="card bg-base-100 shadow-sm">
+        <div class="card-body gap-4">
         <h2 class="card-title text-lg">Brewery List Mode</h2>
         <p class="text-sm text-base-content/70">
           This preference controls which experience opens when you tap Home.
@@ -51,7 +52,8 @@
         <p class="text-xs text-base-content/60">
           Saved locally on this device and browser.
         </p>
-      </div>
+        </div>
+      </section>
     </section>
   </main>
 </template>

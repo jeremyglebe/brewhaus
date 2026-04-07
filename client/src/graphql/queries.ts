@@ -10,6 +10,7 @@ export const QUERIES = Object.freeze({
         items {
           id
           name
+          imageUrl
           breweryType
           address1
           address2
@@ -41,6 +42,7 @@ export const QUERIES = Object.freeze({
       brewery(id: $id) {
         id
         name
+        imageUrl
         breweryType
         address1
         address2
@@ -65,6 +67,7 @@ export const QUERIES = Object.freeze({
         items {
           id
           name
+          imageUrl
           breweryType
           address1
           address2

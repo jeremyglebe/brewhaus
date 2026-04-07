@@ -30,14 +30,26 @@
 
       <!-- Main result list. -->
       <div v-else class="space-y-4">
-        <div v-for="brewery in breweries" :key="brewery.id" class="card bg-base-100 shadow-sm">
+        <BreweryListItem v-for="brewery in breweries" :key="brewery.id" :brewery="brewery" @select="onListItemSelected" />
 
-          <!-- Component-based card -->
-          <BreweryListItem :brewery="brewery" @select="onListItemSelected"></BreweryListItem>
-
+        <div v-if="breweries.length === 0" class="alert shadow-sm">
+          <span>No breweries found for the selected filters.</span>
         </div>
 
-        <DetailModal ref="modalRef" />
+        <GenericModal ref="modalRef" title="Brewery details" box-class="max-w-3xl">
+          <template #default="{ data }">
+            <div class="space-y-4">
+              <BreweryDetails v-if="data?.breweryId" :brewery-id="String(data.breweryId)" />
+              <RouterLink
+                v-if="data?.breweryId"
+                :to="`/brewery/${String(data.breweryId)}`"
+                class="btn btn-outline btn-sm"
+              >
+                Open full page
+              </RouterLink>
+            </div>
+          </template>
+        </GenericModal>
 
         <!-- Sentinel observed by IntersectionObserver.
              When it enters the viewport, the app attempts to load the next page. -->
@@ -57,9 +69,11 @@
 
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref, useTemplateRef, watch } from 'vue';
+import { RouterLink } from 'vue-router';
 import BreweryListItem from '@/components/BreweryListItem.vue';
 import BreweryFilters from '@/components/BreweryFilters.vue';
-import DetailModal from '../modals/DetailModal.vue';
+import BreweryDetails from '@/components/BreweryDetails.vue';
+import GenericModal from '@/components/ui/GenericModal.vue';
 import type { Brewery, BreweryListFilters } from '@/types/graphql';
 import fetchAllBreweries from '@/services/brewery/fetchAll';
 
@@ -192,7 +206,7 @@ watch(sentinelElement, (el) => {
 });
 
 function onListItemSelected(breweryId: string): void {
-  modal.value?.open(breweryId);
+  modal.value?.open({ breweryId });
 }
 
 // Applying filters resets the list to page 1 with the new filter set active.

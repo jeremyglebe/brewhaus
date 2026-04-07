@@ -75,13 +75,12 @@
           </div>
         </div>
 
-        <div
+        <BreweryListItem
           v-for="brewery in breweries"
           :key="brewery.id"
-          class="card bg-base-100 shadow-sm"
-        >
-          <BreweryListItem :brewery="brewery" @select="onListItemSelected" />
-        </div>
+          :brewery="brewery"
+          @select="onListItemSelected"
+        />
 
         <div class="card bg-base-100 shadow-sm">
           <div class="card-body p-4">
@@ -139,7 +138,20 @@
           <span>No breweries found for the selected filters.</span>
         </div>
 
-        <DetailModal ref="modalRef" />
+        <GenericModal ref="modalRef" title="Brewery details" box-class="max-w-3xl">
+          <template #default="{ data }">
+            <div class="space-y-4">
+              <BreweryDetails v-if="data?.breweryId" :brewery-id="String(data.breweryId)" />
+              <RouterLink
+                v-if="data?.breweryId"
+                :to="`/brewery/${String(data.breweryId)}`"
+                class="btn btn-outline btn-sm"
+              >
+                Open full page
+              </RouterLink>
+            </div>
+          </template>
+        </GenericModal>
       </div>
     </section>
   </main>
@@ -147,9 +159,11 @@
 
 <script setup lang="ts">
 import { computed, ref, useTemplateRef } from 'vue';
+import { RouterLink } from 'vue-router';
 import BreweryListItem from '@/components/BreweryListItem.vue';
 import BreweryFilters from '@/components/BreweryFilters.vue';
-import DetailModal from '../modals/DetailModal.vue';
+import BreweryDetails from '@/components/BreweryDetails.vue';
+import GenericModal from '@/components/ui/GenericModal.vue';
 import type { Brewery, BreweryListFilters } from '@/types/graphql';
 import fetchAllBreweries from '@/services/brewery/fetchAll';
 import fetchBreweriesMeta from '@/services/brewery/fetchMeta';
@@ -263,7 +277,7 @@ async function goToPage(page: number): Promise<void> {
 }
 
 function onListItemSelected(breweryId: string): void {
-  modal.value?.open(breweryId);
+  modal.value?.open({ breweryId });
 }
 
 function onFiltersApply(filters: BreweryListFilters): void {

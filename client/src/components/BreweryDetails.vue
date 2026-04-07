@@ -1,6 +1,11 @@
 <template>
-  <div v-if="loading" class="flex justify-center py-6">
-    <span class="loading loading-infinity loading-md"></span>
+  <div v-if="loading" class="space-y-4">
+    <div class="skeleton h-52 w-full rounded-box"></div>
+    <div class="space-y-2">
+      <div class="skeleton h-6 w-2/3"></div>
+      <div class="skeleton h-4 w-1/2"></div>
+      <div class="skeleton h-4 w-3/4"></div>
+    </div>
   </div>
 
   <div v-else-if="errorMessage" class="alert alert-error shadow-sm">
@@ -8,9 +13,18 @@
   </div>
 
   <div v-else-if="brewery" class="space-y-4">
+    <figure class="overflow-hidden rounded-box bg-base-200">
+      <img
+        :src="brewery.imageUrl"
+        :alt="`${brewery.name} photo`"
+        class="aspect-4/3 w-full object-cover"
+        loading="lazy"
+      >
+    </figure>
+
     <div class="flex items-start justify-between gap-3">
       <div>
-        <h2 class="text-2xl font-bold">{{ brewery.name }}</h2>
+        <h2 class="text-xl font-bold">{{ brewery.name }}</h2>
         <p class="text-base-content/70">
           {{ brewery.city }}<span v-if="brewery.stateProvince">, {{ brewery.stateProvince }}</span>
         </p>
@@ -28,7 +42,7 @@
       </button>
     </div>
 
-    <div class="space-y-2">
+    <div class="space-y-2 text-sm">
       <div v-if="brewery.breweryType" class="badge badge-outline">
         {{ brewery.breweryType }}
       </div>
@@ -50,6 +64,7 @@ import { HeartIcon as HeartSolidIcon } from '@heroicons/vue/24/solid';
 import { HeartIcon as HeartOutlineIcon } from '@heroicons/vue/24/outline';
 import fetchBreweryById from '@/services/brewery/fetchById';
 import { useFavorites } from '@/composables/useFavorites';
+import { useToast } from '@/composables/useToast';
 import { createFavoriteBrewerySummary } from '@/services/favorites';
 import type { Brewery } from '@/types/graphql';
 import { onMounted, ref, watch } from 'vue'
@@ -62,6 +77,7 @@ const brewery = ref<Brewery | null>(null)
 const loading = ref(true)
 const errorMessage = ref<string | null>(null)
 const { isFavorite, toggleFavorite } = useFavorites()
+const toast = useToast()
 
 const favoriteSummary = computed(() => {
   if (!brewery.value) {
@@ -102,7 +118,15 @@ function onFavoriteToggle(): void {
     return
   }
 
+  const wasFavorite = favorite.value
   toggleFavorite(favoriteSummary.value)
+
+  if (wasFavorite) {
+    toast.info('Removed from favorites')
+    return
+  }
+
+  toast.success('Added to favorites')
 }
 
 onMounted(loadBrewery)

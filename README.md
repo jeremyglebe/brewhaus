@@ -29,8 +29,9 @@ In both the client and the server directories, execute this command:
   - ✅ Route to the standalone page when accessed from the favorites menu
 - ✅ Settings Menu to Switch Between Pagination/Infinite Scroll
   - ✅ Implement Pagination version of the List Page
-- 🔎 Random Images for each Brewery
-  - as placeholders for if the hypothetical company's API supported photos of the business
+- ✅ Random Images for each Brewery
+  - Images are being used as placeholders; the images are not actually of the business or even brewery-related
+  - Imagine the hypothetical company's API supported photos of the business, this demonstrates how it may be displayed
 - 🔎 Lat/Lon Maps Display
 - 🔎 Capacitor Integration
 

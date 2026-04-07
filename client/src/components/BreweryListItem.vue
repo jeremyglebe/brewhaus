@@ -1,8 +1,20 @@
 <template>
-  <button type="button" class="card w-full bg-base-100 text-left shadow-sm transition hover:shadow-md"
-    @click="$emit('select', brewery.id)">
+  <button
+    type="button"
+    class="card w-full overflow-hidden bg-base-100 text-left shadow-sm transition hover:shadow-md"
+    @click="$emit('select', brewery.id)"
+  >
+    <figure class="bg-base-200">
+      <img
+        :src="brewery.imageUrl"
+        :alt="`${brewery.name} photo`"
+        class="aspect-4/3 w-full object-cover"
+        loading="lazy"
+      >
+    </figure>
+
     <div class="card-body">
-      <h2 class="card-title">{{ brewery.name }}</h2>
+      <h2 class="card-title text-lg">{{ brewery.name }}</h2>
 
       <p class="text-base-content/70">
         {{ brewery.city }}<span v-if="brewery.stateProvince">, {{ brewery.stateProvince }}</span>
