@@ -158,46 +158,35 @@ Use this flow:
 npm run install
 ```
 
-2. Build the project from the root so the latest client assets are pushed into the native projects:
+2. Prepare the Android Emulator build:
 
 ```sh
-npm run build
+npm run --prefix ./client prepare:android
 ```
+
+Do not run the root `build` step after this for emulator prep. `prepare:android` already creates the Emulator-targeted client build and syncs it into the native project.
 
 3. Open the Android project:
 
 ```sh
-npx cap open android
+npm exec --prefix ./client cap open android
 ```
 
 4. Start the local server on the host machine:
 
 ```sh
-cd server
-npm run dev
+npm run --prefix ./server dev
 ```
 
-If you also want the normal browser client running alongside the emulator workflow, you can use the root-level dev runner instead:
+In this workflow you typically do not need the browser client running at the same time.
+
+If you also want the normal browser client running alongside the emulator workflow, you can still use the root-level dev runner instead:
 
 ```sh
 npm run dev
 ```
 
-If you prefer, you can still run the client-only Android build flow from inside `client/`:
-
-```sh
-cd client
-npm run prepare:android
-```
-
-Optional browser check for Android-mode env values:
-
-```sh
-cd client
-npm run dev:android
-```
-
-In that mode the GraphQL URL resolves to `http://10.0.2.2:4000/graphql`.
+All of the commands above should be run from the repo root.
 
 ## Generated Types And Codegen
 
