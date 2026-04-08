@@ -1,0 +1,21 @@
+{
+  "name": "brewhaus",
+  "version": "1.0.0",
+  "description": "a mobile-friendly Vue client for browsing breweries from Open Brewery DB",
+  "homepage": "https://github.com/jeremyglebe/brewhaus#readme",
+  "bugs": {
+    "url": "https://github.com/jeremyglebe/brewhaus/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeremyglebe/brewhaus.git"
+  },
+  "license": "UNLICENSED",
+  "author": "Jeremy Glebe",
+  "scripts": {
+    "start": "npm run dev",
+    "build": "node ./scripts/build.mjs",
+    "dev": "node ./scripts/dev.mjs",
+    "postbuild": "node ./scripts/generate-tree.mjs . --tracked --root-label \"Brewhaus App Root\" --prune-empty-dirs --stats --output tree"
+  }
+}

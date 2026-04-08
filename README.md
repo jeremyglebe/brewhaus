@@ -1,6 +1,6 @@
 # Brewhaus
 
-Brewhaus is a take-home demo application for browsing breweries from Open Brewery DB through a small GraphQL layer and a mobile-friendly Vue client.
+Brewhaus is an application for browsing breweries from Open Brewery DB through a small GraphQL layer and a mobile-friendly Vue client.
 
 The project is organized as a small monorepo:
 
