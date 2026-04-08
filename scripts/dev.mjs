@@ -51,20 +51,22 @@ function getChildEnv() {
 
 const tasks = [
   {
-    key: '1',
     name: 'server',
     command: 'npm',
     args: ['run', 'dev', '--prefix', './server'],
     child: null,
     exited: false,
+    expectedExit: false,
+    restartRequested: false,
   },
   {
-    key: '2',
     name: 'client',
     command: 'npm',
     args: ['run', 'dev', '--prefix', './client'],
     child: null,
     exited: false,
+    expectedExit: false,
+    restartRequested: false,
   },
 ];
 
@@ -73,7 +75,7 @@ let requestedExitCode = 0;
 const interactiveFooter = Boolean(process.stdout.isTTY && process.stdin.isTTY);
 
 function getControlsText() {
-  return `Controls: q = quit all, 1 = stop ${formatLabel('server')}, 2 = stop ${formatLabel('client')}, Ctrl+C = quit all`;
+  return `Controls: Ctrl+C quit | R restart both | A restart ${formatLabel('client')} | S restart ${formatLabel('server')} | I info`;
 }
 
 function clearFooter() {
@@ -126,6 +128,38 @@ function stopTask(task, signal = 'SIGTERM') {
   }
 }
 
+function restartTask(task) {
+  if (!task.child || task.exited) {
+    writeLine(`Starting ${task.name}...`);
+    startTask(task);
+    return;
+  }
+
+  writeLine(`Restarting ${task.name}...`);
+  task.restartRequested = true;
+  task.expectedExit = true;
+  stopTask(task, 'SIGTERM');
+
+  // Escalate if the process does not exit promptly.
+  setTimeout(() => {
+    if (task.restartRequested && task.child && !task.exited && !task.child.killed) {
+      stopTask(task, 'SIGKILL');
+    }
+  }, 1500);
+}
+
+function printInfo() {
+  const statusLines = tasks.map((task) => {
+    const running = task.child && !task.exited;
+    return `- ${task.name}: ${running ? 'running' : 'stopped'}`;
+  });
+
+  writeLine('Dev process status:');
+  for (const line of statusLines) {
+    writeLine(line);
+  }
+}
+
 function stopAll(signal = 'SIGTERM') {
   for (const task of tasks) {
     stopTask(task, signal);
@@ -161,6 +195,9 @@ function initiateShutdown(exitCode = 0, reason = '') {
 }
 
 function startTask(task) {
+  task.exited = false;
+  task.expectedExit = false;
+
   const child = spawn(task.command, task.args, {
     stdio: ['ignore', 'pipe', 'pipe'],
     shell: process.platform === 'win32',
@@ -182,9 +219,19 @@ function startTask(task) {
   });
 
   child.on('exit', (code, signal) => {
-    task.exited = true;
+    const wasExpected = task.expectedExit;
 
-    if (!shuttingDown && (code !== 0 || signal)) {
+    task.exited = true;
+    task.child = null;
+    task.expectedExit = false;
+
+    if (task.restartRequested && !shuttingDown) {
+      task.restartRequested = false;
+      startTask(task);
+      return;
+    }
+
+    if (!shuttingDown && !wasExpected && (code !== 0 || signal)) {
       const detail = signal ? `signal ${signal}` : `exit code ${code}`;
       initiateShutdown(1, `${task.name} exited unexpectedly (${detail}). Stopping all dev processes.`);
       return;
@@ -195,7 +242,7 @@ function startTask(task) {
 }
 
 function printControls() {
-  writeLine('Starting dev processes...');
+  writeLine('Starting dev processes (server + client)...');
 
   if (interactiveFooter) {
     drawFooter();
@@ -218,16 +265,38 @@ function setupControls() {
 
   process.stdin.on('data', (chunk) => {
     const key = chunk.toString();
+    const normalized = key.trim().toUpperCase();
 
-    if (key === '\u0003' || key === 'q') {
+    if (key === '\u0003') {
       initiateShutdown(0, 'Stopping all dev processes...');
       return;
     }
 
-    const task = tasks.find((item) => item.key === key);
-    if (task) {
-      writeLine(`Stopping ${task.name}...`);
-      stopTask(task, 'SIGTERM');
+    if (normalized === 'R') {
+      for (const task of tasks) {
+        restartTask(task);
+      }
+      return;
+    }
+
+    if (normalized === 'A') {
+      const clientTask = tasks.find((task) => task.name === 'client');
+      if (clientTask) {
+        restartTask(clientTask);
+      }
+      return;
+    }
+
+    if (normalized === 'S') {
+      const serverTask = tasks.find((task) => task.name === 'server');
+      if (serverTask) {
+        restartTask(serverTask);
+      }
+      return;
+    }
+
+    if (normalized === 'I') {
+      printInfo();
     }
   });
 }
