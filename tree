@@ -1,143 +1,207 @@
-📦brewhaus
+📦Brewhaus App Root
  ┣ 📂client
  ┃ ┣ 📂.vscode
- ┃ ┃ ┣ 📜extensions.json
- ┃ ┃ ┗ 📜settings.json
+ ┃ ┃ ┗ 📜extensions.json
+ ┃ ┃
  ┃ ┣ 📂android
- ┃ ┃ ┣ 📂.idea
- ┃ ┃ ┃ ┣ 📂caches
- ┃ ┃ ┃ ┃ ┗ 📜deviceStreaming.xml
- ┃ ┃ ┃ ┣ 📜.gitignore
- ┃ ┃ ┃ ┣ 📜AndroidProjectSystem.xml
- ┃ ┃ ┃ ┣ 📜compiler.xml
- ┃ ┃ ┃ ┣ 📜deploymentTargetSelector.xml
- ┃ ┃ ┃ ┣ 📜deviceManager.xml
- ┃ ┃ ┃ ┣ 📜gradle.xml
- ┃ ┃ ┃ ┣ 📜migrations.xml
- ┃ ┃ ┃ ┣ 📜misc.xml
- ┃ ┃ ┃ ┣ 📜runConfigurations.xml
- ┃ ┃ ┃ ┣ 📜vcs.xml
- ┃ ┃ ┃ ┗ 📜workspace.xml
  ┃ ┃ ┣ 📂app
  ┃ ┃ ┃ ┣ 📂src
  ┃ ┃ ┃ ┃ ┣ 📂androidTest
+ ┃ ┃ ┃ ┃ ┃ ┗ 📂java
+ ┃ ┃ ┃ ┃ ┃    ┗ 📂com
+ ┃ ┃ ┃ ┃ ┃       ┗ 📂getcapacitor
+ ┃ ┃ ┃ ┃ ┃          ┗ 📂myapp
+ ┃ ┃ ┃ ┃ ┃             ┗ 📜ExampleInstrumentedTest.java
+ ┃ ┃ ┃ ┃ ┃
  ┃ ┃ ┃ ┃ ┣ 📂main
- ┃ ┃ ┃ ┃ ┃ ┣ 📂assets
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂public
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂assets
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜cordova.js
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜cordova_plugins.js
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜favicon.ico
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜index.html
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜capacitor.config.json
- ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜capacitor.plugins.json
  ┃ ┃ ┃ ┃ ┃ ┣ 📂java
  ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂com
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂jeremyglebe
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂brewhaus
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜MainActivity.java
+ ┃ ┃ ┃ ┃ ┃ ┃    ┗ 📂jeremyglebe
+ ┃ ┃ ┃ ┃ ┃ ┃       ┗ 📂brewhaus
+ ┃ ┃ ┃ ┃ ┃ ┃          ┗ 📜MainActivity.java
+ ┃ ┃ ┃ ┃ ┃ ┃
  ┃ ┃ ┃ ┃ ┃ ┣ 📂res
  ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂drawable
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ic_launcher_background.xml
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜splash.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂drawable-land-hdpi
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜splash.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂drawable-land-mdpi
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜splash.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂drawable-land-xhdpi
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜splash.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂drawable-land-xxhdpi
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜splash.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂drawable-land-xxxhdpi
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜splash.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂drawable-port-hdpi
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜splash.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂drawable-port-mdpi
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜splash.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂drawable-port-xhdpi
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜splash.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂drawable-port-xxhdpi
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜splash.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂drawable-port-xxxhdpi
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜splash.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂drawable-v24
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜ic_launcher_foreground.xml
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃
  ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂layout
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜activity_main.xml
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃
  ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂mipmap-anydpi-v26
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ic_launcher_round.xml
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜ic_launcher.xml
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃
  ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂mipmap-hdpi
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ic_launcher_foreground.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ic_launcher_round.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜ic_launcher.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃
  ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂mipmap-mdpi
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ic_launcher_foreground.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ic_launcher_round.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜ic_launcher.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃
  ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂mipmap-xhdpi
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ic_launcher_foreground.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ic_launcher_round.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜ic_launcher.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃
  ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂mipmap-xxhdpi
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ic_launcher_foreground.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ic_launcher_round.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜ic_launcher.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃
  ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂mipmap-xxxhdpi
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ic_launcher_foreground.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ic_launcher_round.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜ic_launcher.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃
  ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂values
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ic_launcher_background.xml
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜strings.xml
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜styles.xml
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃
  ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂xml
+ ┃ ┃ ┃ ┃ ┃ ┃    ┗ 📜file_paths.xml
+ ┃ ┃ ┃ ┃ ┃ ┃
  ┃ ┃ ┃ ┃ ┃ ┗ 📜AndroidManifest.xml
+ ┃ ┃ ┃ ┃ ┃
  ┃ ┃ ┃ ┃ ┗ 📂test
+ ┃ ┃ ┃ ┃    ┗ 📂java
+ ┃ ┃ ┃ ┃       ┗ 📂com
+ ┃ ┃ ┃ ┃          ┗ 📂getcapacitor
+ ┃ ┃ ┃ ┃             ┗ 📂myapp
+ ┃ ┃ ┃ ┃                ┗ 📜ExampleUnitTest.java
+ ┃ ┃ ┃ ┃
  ┃ ┃ ┃ ┣ 📜.gitignore
  ┃ ┃ ┃ ┣ 📜build.gradle
  ┃ ┃ ┃ ┣ 📜capacitor.build.gradle
  ┃ ┃ ┃ ┗ 📜proguard-rules.pro
- ┃ ┃ ┣ 📂capacitor-cordova-android-plugins
- ┃ ┃ ┃ ┣ 📂src
- ┃ ┃ ┃ ┃ ┗ 📂main
- ┃ ┃ ┃ ┃ ┃ ┣ 📂java
- ┃ ┃ ┃ ┃ ┃ ┣ 📂res
- ┃ ┃ ┃ ┃ ┃ ┗ 📜AndroidManifest.xml
- ┃ ┃ ┃ ┣ 📜build.gradle
- ┃ ┃ ┃ ┗ 📜cordova.variables.gradle
+ ┃ ┃ ┃
  ┃ ┃ ┣ 📂gradle
  ┃ ┃ ┃ ┗ 📂wrapper
- ┃ ┃ ┃ ┃ ┣ 📜gradle-wrapper.jar
- ┃ ┃ ┃ ┃ ┗ 📜gradle-wrapper.properties
+ ┃ ┃ ┃    ┣ 📜gradle-wrapper.jar
+ ┃ ┃ ┃    ┗ 📜gradle-wrapper.properties
+ ┃ ┃ ┃
  ┃ ┃ ┣ 📜.gitignore
  ┃ ┃ ┣ 📜build.gradle
  ┃ ┃ ┣ 📜capacitor.settings.gradle
  ┃ ┃ ┣ 📜gradle.properties
  ┃ ┃ ┣ 📜gradlew
  ┃ ┃ ┣ 📜gradlew.bat
- ┃ ┃ ┣ 📜local.properties
  ┃ ┃ ┣ 📜settings.gradle
  ┃ ┃ ┗ 📜variables.gradle
+ ┃ ┃
  ┃ ┣ 📂ios
  ┃ ┃ ┣ 📂App
  ┃ ┃ ┃ ┣ 📂App
  ┃ ┃ ┃ ┃ ┣ 📂Assets.xcassets
  ┃ ┃ ┃ ┃ ┃ ┣ 📂AppIcon.appiconset
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜AppIcon-512@2x.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜Contents.json
+ ┃ ┃ ┃ ┃ ┃ ┃
  ┃ ┃ ┃ ┃ ┃ ┣ 📂Splash.imageset
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜Contents.json
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜splash-2732x2732-1.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜splash-2732x2732-2.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜splash-2732x2732.png
+ ┃ ┃ ┃ ┃ ┃ ┃
  ┃ ┃ ┃ ┃ ┃ ┗ 📜Contents.json
+ ┃ ┃ ┃ ┃ ┃
  ┃ ┃ ┃ ┃ ┣ 📂Base.lproj
  ┃ ┃ ┃ ┃ ┃ ┣ 📜LaunchScreen.storyboard
  ┃ ┃ ┃ ┃ ┃ ┗ 📜Main.storyboard
- ┃ ┃ ┃ ┃ ┣ 📂public
- ┃ ┃ ┃ ┃ ┃ ┣ 📂assets
- ┃ ┃ ┃ ┃ ┃ ┣ 📜cordova.js
- ┃ ┃ ┃ ┃ ┃ ┣ 📜cordova_plugins.js
- ┃ ┃ ┃ ┃ ┃ ┣ 📜favicon.ico
- ┃ ┃ ┃ ┃ ┃ ┗ 📜index.html
+ ┃ ┃ ┃ ┃ ┃
  ┃ ┃ ┃ ┃ ┣ 📜AppDelegate.swift
- ┃ ┃ ┃ ┃ ┣ 📜capacitor.config.json
- ┃ ┃ ┃ ┃ ┣ 📜config.xml
  ┃ ┃ ┃ ┃ ┗ 📜Info.plist
+ ┃ ┃ ┃ ┃
  ┃ ┃ ┃ ┣ 📂App.xcodeproj
  ┃ ┃ ┃ ┃ ┣ 📂project.xcworkspace
  ┃ ┃ ┃ ┃ ┃ ┗ 📂xcshareddata
- ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜IDEWorkspaceChecks.plist
+ ┃ ┃ ┃ ┃ ┃    ┗ 📜IDEWorkspaceChecks.plist
+ ┃ ┃ ┃ ┃ ┃
  ┃ ┃ ┃ ┃ ┗ 📜project.pbxproj
+ ┃ ┃ ┃ ┃
  ┃ ┃ ┃ ┗ 📂CapApp-SPM
- ┃ ┃ ┃ ┃ ┣ 📂Sources
- ┃ ┃ ┃ ┃ ┃ ┗ 📂CapApp-SPM
- ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜CapApp-SPM.swift
- ┃ ┃ ┃ ┃ ┣ 📜.gitignore
- ┃ ┃ ┃ ┃ ┣ 📜Package.swift
- ┃ ┃ ┃ ┃ ┗ 📜README.md
- ┃ ┃ ┣ 📂capacitor-cordova-ios-plugins
- ┃ ┃ ┃ ┣ 📂resources
- ┃ ┃ ┃ ┃ ┗ 📜.gitkeep
- ┃ ┃ ┃ ┣ 📂sources
- ┃ ┃ ┃ ┃ ┗ 📜.gitkeep
- ┃ ┃ ┃ ┗ 📜CordovaPluginsResources.podspec
+ ┃ ┃ ┃    ┣ 📂Sources
+ ┃ ┃ ┃    ┃ ┗ 📂CapApp-SPM
+ ┃ ┃ ┃    ┃    ┗ 📜CapApp-SPM.swift
+ ┃ ┃ ┃    ┃
+ ┃ ┃ ┃    ┣ 📜.gitignore
+ ┃ ┃ ┃    ┣ 📜Package.swift
+ ┃ ┃ ┃    ┗ 📜README.md
+ ┃ ┃ ┃
  ┃ ┃ ┣ 📜.gitignore
  ┃ ┃ ┗ 📜debug.xcconfig
+ ┃ ┃
  ┃ ┣ 📂public
- ┃ ┃ ┗ 📜favicon.ico
+ ┃ ┃ ┣ 📜favicon.ico
+ ┃ ┃ ┗ 📜favicon.svg
+ ┃ ┃
  ┃ ┣ 📂src
  ┃ ┃ ┣ 📂assets
+ ┃ ┃ ┃ ┣ 📜beer-mug.svg
  ┃ ┃ ┃ ┗ 📜main.css
+ ┃ ┃ ┃
  ┃ ┃ ┣ 📂components
  ┃ ┃ ┃ ┣ 📂ui
  ┃ ┃ ┃ ┃ ┣ 📜GenericModal.vue
  ┃ ┃ ┃ ┃ ┣ 📜PaginationControls.vue
  ┃ ┃ ┃ ┃ ┣ 📜README.md
  ┃ ┃ ┃ ┃ ┗ 📜ToastManager.vue
+ ┃ ┃ ┃ ┃
  ┃ ┃ ┃ ┣ 📜BreweryDetails.vue
  ┃ ┃ ┃ ┣ 📜BreweryFilters.vue
  ┃ ┃ ┃ ┣ 📜BreweryListItem.vue
  ┃ ┃ ┃ ┗ 📜BreweryMapEmbed.vue
+ ┃ ┃ ┃
  ┃ ┃ ┣ 📂composables
  ┃ ┃ ┃ ┣ 📜useFavorites.ts
  ┃ ┃ ┃ ┗ 📜useToast.ts
+ ┃ ┃ ┃
  ┃ ┃ ┣ 📂graphql
  ┃ ┃ ┃ ┗ 📜queries.ts
+ ┃ ┃ ┃
  ┃ ┃ ┣ 📂lib
  ┃ ┃ ┃ ┗ 📜apollo.ts
+ ┃ ┃ ┃
  ┃ ┃ ┣ 📂router
  ┃ ┃ ┃ ┗ 📜index.ts
+ ┃ ┃ ┃
  ┃ ┃ ┣ 📂services
  ┃ ┃ ┃ ┣ 📂brewery
  ┃ ┃ ┃ ┃ ┣ 📜fetchAll.ts
@@ -145,26 +209,33 @@
  ┃ ┃ ┃ ┃ ┣ 📜fetchBySearch.ts
  ┃ ┃ ┃ ┃ ┣ 📜fetchMeta.ts
  ┃ ┃ ┃ ┃ ┗ 📜index.ts
+ ┃ ┃ ┃ ┃
  ┃ ┃ ┃ ┣ 📂favorites
  ┃ ┃ ┃ ┃ ┗ 📜index.ts
+ ┃ ┃ ┃ ┃
  ┃ ┃ ┃ ┣ 📂preferences
  ┃ ┃ ┃ ┃ ┣ 📜index.ts
  ┃ ┃ ┃ ┃ ┗ 📜listMode.ts
+ ┃ ┃ ┃ ┃
  ┃ ┃ ┃ ┗ 📂storage
- ┃ ┃ ┃ ┃ ┣ 📜keys.ts
- ┃ ┃ ┃ ┃ ┗ 📜localStorage.ts
+ ┃ ┃ ┃    ┣ 📜keys.ts
+ ┃ ┃ ┃    ┗ 📜localStorage.ts
+ ┃ ┃ ┃
  ┃ ┃ ┣ 📂types
  ┃ ┃ ┃ ┗ 📜graphql.ts
+ ┃ ┃ ┃
  ┃ ┃ ┣ 📂views
  ┃ ┃ ┃ ┗ 📂pages
- ┃ ┃ ┃ ┃ ┣ 📜DetailPage.vue
- ┃ ┃ ┃ ┃ ┣ 📜ListPage.vue
- ┃ ┃ ┃ ┃ ┣ 📜ListPageInfinite.vue
- ┃ ┃ ┃ ┃ ┣ 📜ListPagePaginated.vue
- ┃ ┃ ┃ ┃ ┣ 📜SearchPage.vue
- ┃ ┃ ┃ ┃ ┗ 📜SettingsPage.vue
+ ┃ ┃ ┃    ┣ 📜DetailPage.vue
+ ┃ ┃ ┃    ┣ 📜ListPage.vue
+ ┃ ┃ ┃    ┣ 📜ListPageInfinite.vue
+ ┃ ┃ ┃    ┣ 📜ListPagePaginated.vue
+ ┃ ┃ ┃    ┣ 📜SearchPage.vue
+ ┃ ┃ ┃    ┗ 📜SettingsPage.vue
+ ┃ ┃ ┃
  ┃ ┃ ┣ 📜App.vue
  ┃ ┃ ┗ 📜main.ts
+ ┃ ┃
  ┃ ┣ 📜.editorconfig
  ┃ ┣ 📜.env.android
  ┃ ┣ 📜.env.development
@@ -183,6 +254,7 @@
  ┃ ┣ 📜tsconfig.json
  ┃ ┣ 📜tsconfig.node.json
  ┃ ┗ 📜vite.config.ts
+ ┃
  ┣ 📂server
  ┃ ┣ 📂src
  ┃ ┃ ┣ 📂resolvers
@@ -192,43 +264,56 @@
  ┃ ┃ ┃ ┣ 📜listMeta.ts
  ┃ ┃ ┃ ┣ 📜map.ts
  ┃ ┃ ┃ ┗ 📜search.ts
+ ┃ ┃ ┃
  ┃ ┃ ┣ 📂schema
  ┃ ┃ ┃ ┗ 📜typeDefs.ts
+ ┃ ┃ ┃
  ┃ ┃ ┣ 📂services
  ┃ ┃ ┃ ┗ 📂api
- ┃ ┃ ┃ ┃ ┣ 📜constants.ts
- ┃ ┃ ┃ ┃ ┣ 📜error.ts
- ┃ ┃ ┃ ┃ ┣ 📜index.ts
- ┃ ┃ ┃ ┃ ┗ 📜types.ts
+ ┃ ┃ ┃    ┣ 📜constants.ts
+ ┃ ┃ ┃    ┣ 📜error.ts
+ ┃ ┃ ┃    ┣ 📜index.ts
+ ┃ ┃ ┃    ┗ 📜types.ts
+ ┃ ┃ ┃
  ┃ ┃ ┗ 📜index.ts
+ ┃ ┃
  ┃ ┣ 📜.gitignore
  ┃ ┣ 📜package-lock.json
  ┃ ┣ 📜package.json
+ ┃ ┣ 📜README.md
  ┃ ┗ 📜tsconfig.json
+ ┃
  ┣ 📂shared
  ┃ ┣ 📂schema
  ┃ ┃ ┗ 📜schema.graphql
+ ┃ ┃
  ┃ ┣ 📂types
  ┃ ┃ ┣ 📂api
  ┃ ┃ ┃ ┣ 📜index.ts
  ┃ ┃ ┃ ┗ 📜openBrewery.ts
+ ┃ ┃ ┃
  ┃ ┃ ┣ 📂common
  ┃ ┃ ┃ ┣ 📜enums.ts
  ┃ ┃ ┃ ┗ 📜index.ts
+ ┃ ┃ ┃
  ┃ ┃ ┣ 📂graphql
  ┃ ┃ ┃ ┣ 📂generated
  ┃ ┃ ┃ ┃ ┣ 📜operations.ts
  ┃ ┃ ┃ ┃ ┗ 📜schema.ts
+ ┃ ┃ ┃ ┃
  ┃ ┃ ┃ ┗ 📜index.ts
+ ┃ ┃ ┃
  ┃ ┃ ┣ 📜api.ts
- ┃ ┃ ┣ 📜common.ts
- ┃ ┃ ┣ 📜enums.ts
  ┃ ┃ ┗ 📜graphql.ts
+ ┃ ┃
  ┃ ┣ 📜.gitignore
  ┃ ┣ 📜codegen.yml
  ┃ ┣ 📜package-lock.json
  ┃ ┣ 📜package.json
+ ┃ ┣ 📜README.md
  ┃ ┗ 📜tsconfig.json
- ┣ 📜package-lock.json
+ ┃
  ┣ 📜README.md
  ┗ 📜tree
+
+Stats: 87 directories, 162 files
