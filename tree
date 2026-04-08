@@ -318,7 +318,8 @@
  ┃ ┣ 📜README.md
  ┃ ┗ 📜tsconfig.json
  ┃
+ ┣ 📜package.json
  ┣ 📜README.md
  ┗ 📜tree
 
-Stats: 88 directories, 165 files
+Stats: 88 directories, 166 files

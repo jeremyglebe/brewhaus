@@ -191,18 +191,6 @@ npm run dev:android
 
 In that mode the GraphQL URL resolves to `http://10.0.2.2:4000/graphql`.
 
-## Capacitor Notes
-
-The client is intentionally built as a normal web app first, with Capacitor layered on top for packaging and device-only integrations.
-
-Current Capacitor-specific assumptions:
-
-- native Android/iOS projects already exist in `client/android/` and `client/ios/`
-- geolocation is consumed through `@capacitor/geolocation`
-- the map experience uses an iframe-based Google Maps embed rather than a native SDK integration
-
-That keeps the demo focused on product flow and local development simplicity rather than native platform complexity.
-
 ## Generated Types And Codegen
 
 The shared package includes GraphQL code generation config:

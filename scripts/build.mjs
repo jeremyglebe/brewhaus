@@ -2,10 +2,12 @@
 
 import { spawnSync } from 'node:child_process';
 
+const CLIENT_DIR = './client';
+
 const commands = [
   ['npm', ['run', 'build', '--prefix', './shared']],
   ['npm', ['run', 'build', '--prefix', './server']],
-  ['npm', ['run', 'build', '--prefix', './client']],
+  ['npm', ['run', 'build', '--prefix', CLIENT_DIR]],
 ];
 
 for (const [command, args] of commands) {
@@ -29,4 +31,23 @@ for (const [command, args] of commands) {
   }
 }
 
-process.stdout.write('\nAll builds completed successfully.\n');
+// Sync the freshly built client web assets into the Capacitor native projects.
+process.stdout.write('\n==> npx cap sync [client]\n');
+
+const syncResult = spawnSync('npx', ['cap', 'sync'], {
+  cwd: CLIENT_DIR,
+  stdio: 'inherit',
+  shell: process.platform === 'win32',
+});
+
+if (syncResult.error) {
+  process.stderr.write(`\nCap sync failed to start: ${syncResult.error.message}\n`);
+  process.exit(1);
+}
+
+if (syncResult.status !== 0) {
+  process.stderr.write(`\nCap sync failed (exit ${syncResult.status})\n`);
+  process.exit(syncResult.status ?? 1);
+}
+
+process.stdout.write('\nAll builds completed and Capacitor synced successfully.\n');
