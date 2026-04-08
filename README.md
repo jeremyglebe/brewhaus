@@ -118,36 +118,17 @@ That separation keeps UI files lighter and makes responsibilities easier to expl
 - Node.js 20+
 - npm 10+
 
-### Install dependencies
+### Getting Started & Installation
 
-Run this once in each package:
-
-```sh
-cd client
-npm install
-
-cd ../server
-npm install
-
-cd ../shared
-npm install
-```
-
-### Start local development
-
-Run the server:
+From the repo root:
 
 ```sh
-cd server
+npm run install
 npm run dev
 ```
 
-Run the client in a second terminal:
-
-```sh
-cd client
-npm run dev
-```
+- `npm run install` installs `shared/`, `server/`, and `client/` in order and makes sure the Capacitor native projects are present and synced
+- `npm run dev` starts the server and client together in one interactive terminal with prefixed output
 
 Default local URLs:
 
@@ -155,13 +136,15 @@ Default local URLs:
 - GraphQL server: `http://localhost:4000/graphql`
 - Health check: `http://localhost:4000/health`
 
-## Browser Development
+### Root-level scripts
 
-For standard browser development, the default client env points to:
+These scripts are intended to coordinate the monorepo as a whole:
 
-`http://localhost:4000/graphql`
-
-That is the mode used by `npm run dev` inside `client/`.
+- `npm run install`: install all three packages and verify/sync Capacitor setup
+- `npm run install:clean`: same as above, but removes existing `node_modules` first
+- `npm run dev`: run the client and server together in one terminal
+- `npm start`: alias for `npm run dev`
+- `npm run build`: build `shared`, `server`, and `client`, then sync the Capacitor projects
 
 ## Android Emulator Mode
 
@@ -169,17 +152,42 @@ Android emulators cannot use the host machine's `localhost` to reach the server.
 
 Use this flow:
 
-1. Start the server on the host machine.
-2. In `client/`, build and sync Android assets:
+1. Install the repo from the root if you have not done that yet:
 
 ```sh
-npm run prepare:android
+npm run install
+```
+
+2. Build the project from the root so the latest client assets are pushed into the native projects:
+
+```sh
+npm run build
 ```
 
 3. Open the Android project:
 
 ```sh
 npx cap open android
+```
+
+4. Start the local server on the host machine:
+
+```sh
+cd server
+npm run dev
+```
+
+If you also want the normal browser client running alongside the emulator workflow, you can use the root-level dev runner instead:
+
+```sh
+npm run dev
+```
+
+If you prefer, you can still run the client-only Android build flow from inside `client/`:
+
+```sh
+cd client
+npm run prepare:android
 ```
 
 Optional browser check for Android-mode env values:

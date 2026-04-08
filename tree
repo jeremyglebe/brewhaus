@@ -258,7 +258,8 @@
  ┣ 📂scripts
  ┃ ┣ 📜build.mjs
  ┃ ┣ 📜dev.mjs
- ┃ ┗ 📜generate-tree.mjs
+ ┃ ┣ 📜generate-tree.mjs
+ ┃ ┗ 📜install.mjs
  ┃
  ┣ 📂server
  ┃ ┣ 📂src
@@ -322,4 +323,4 @@
  ┣ 📜README.md
  ┗ 📜tree
 
-Stats: 88 directories, 166 files
+Stats: 88 directories, 167 files
