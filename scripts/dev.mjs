@@ -70,12 +70,47 @@ const tasks = [
 
 let shuttingDown = false;
 let requestedExitCode = 0;
+const interactiveFooter = Boolean(process.stdout.isTTY && process.stdin.isTTY);
+
+function getControlsText() {
+  return `Controls: q = quit all, 1 = stop ${formatLabel('server')}, 2 = stop ${formatLabel('client')}, Ctrl+C = quit all`;
+}
+
+function clearFooter() {
+  if (!interactiveFooter) {
+    return;
+  }
+
+  readline.clearLine(process.stdout, 0);
+  readline.cursorTo(process.stdout, 0);
+}
+
+function drawFooter() {
+  if (!interactiveFooter || shuttingDown) {
+    return;
+  }
+
+  clearFooter();
+  process.stdout.write(getControlsText());
+}
+
+function writeLine(line) {
+  if (interactiveFooter) {
+    clearFooter();
+  }
+
+  process.stdout.write(`${line}\n`);
+
+  if (interactiveFooter) {
+    drawFooter();
+  }
+}
 
 function prefixLines(stream, label) {
   const decoratedLabel = formatLabel(label);
   const rl = readline.createInterface({ input: stream });
   rl.on('line', (line) => {
-    process.stdout.write(`[${decoratedLabel}] ${line}\n`);
+    writeLine(`[${decoratedLabel}] ${line}`);
   });
 }
 
@@ -112,7 +147,7 @@ function initiateShutdown(exitCode = 0, reason = '') {
   requestedExitCode = exitCode;
 
   if (reason) {
-    process.stdout.write(`${reason}\n`);
+    writeLine(reason);
   }
 
   stopAll('SIGTERM');
@@ -160,13 +195,23 @@ function startTask(task) {
 }
 
 function printControls() {
-  process.stdout.write('Starting dev processes...\n');
-  process.stdout.write(
-    `Controls: q = quit all, 1 = stop ${formatLabel('server')}, 2 = stop ${formatLabel('client')}, Ctrl+C = quit all\n\n`,
-  );
+  writeLine('Starting dev processes...');
+
+  if (interactiveFooter) {
+    drawFooter();
+    process.stdout.write('\n');
+    drawFooter();
+    return;
+  }
+
+  process.stdout.write(`${getControlsText()}\n\n`);
 }
 
 function setupControls() {
+  if (!process.stdin.isTTY) {
+    return;
+  }
+
   process.stdin.setEncoding('utf8');
   process.stdin.setRawMode(true);
   process.stdin.resume();
@@ -181,7 +226,7 @@ function setupControls() {
 
     const task = tasks.find((item) => item.key === key);
     if (task) {
-      process.stdout.write(`Stopping ${task.name}...\n`);
+      writeLine(`Stopping ${task.name}...`);
       stopTask(task, 'SIGTERM');
     }
   });
